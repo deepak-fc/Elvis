@@ -1,0 +1,22 @@
+{
+
+	"intent_fun_matching":
+	[
+    {
+        "fun": "getStockPrice",
+        "patterns":["stock price of", "current price of", "last trading price of", "current market price of"]
+    },
+    {
+        "fun": "getMarketCap",
+        "patterns":["market capitalisation of", "market capitalization of", "market cap of", "market capital of"]
+    },
+    {
+        "fun": "get52WeekLow",
+        "patterns":["52 week low of", "one year low of", "fifty two week of"]
+    },
+    {
+        "fun": "get52WeekHigh",
+        "patterns":["52 week high of", "one year high of", "fifty two high of"]
+    }
+	]
+}

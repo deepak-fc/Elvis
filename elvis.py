@@ -4,7 +4,7 @@ import datetime                  # install using:-  pip install datetime
 import wikipedia                 # install using:- pip install wikipedia
 import webbrowser
 import os
-import smtplib
+import smtplib                       
 from googlesearch import search  # pip install googlesearch-python
 import random
 import subprocess
@@ -12,7 +12,6 @@ import time
 import json
 import yfinance as yf                       # pip install yfinance
 from num2words import num2words as n2w      # pip install num2words
-from yahoo_fin.stock_info import *
 
 # will require pyaudio as well, you can install it using below commands
 # In Terminal type
@@ -40,7 +39,7 @@ voice = voiceEngine.getProperty('voice')
 # print(volume)
 # print(voice)
 
-#  speak function defination
+#  speak function definition
 
 
 def speak(audio):
@@ -73,6 +72,7 @@ def takeCommand():
         print("Listening...")
         r.pause_threshold = 1
         r.operation_timeout = 2
+        r.adjust_for_ambient_noise(source)
         audio = r.listen(source)
 
     try:
@@ -102,6 +102,62 @@ def getCompNameAndTicker(query):
 with open('company_name_ticker.json') as f:
     data = json.load(f)
 
+with open('intent_function.json') as d:
+    intent_data = json.load(d)
+
+def determineIntent(query):
+    for i in range(len(intent_data['intent_fun_matching'])):
+        for pattern in intent_data['intent_fun_matching'][i]['patterns']:   
+            if pattern in query:
+                return intent_data['intent_fun_matching'][i]['fun']
+
+def getStockPrice(query):
+    compNameAndTicker = getCompNameAndTicker(query)
+    company_name, ticker = compNameAndTicker[0], compNameAndTicker[1] 
+    stock_data = yf.Ticker(ticker)                        # makes a yfinance object
+    price = n2w(round(stock_data.info['currentPrice'], 2))# extracts current price and rounds it by 2 digits and also converts the numerical digits into words using n2w function
+
+    results = "The last trading price of", company_name, "is", price, data[company_name]['currency']
+    speak(results)
+
+def getTotalRevenue(query):
+    compNameAndTicker = getCompNameAndTicker(query)
+    company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
+    stock_data = yf.Ticker(ticker)
+    revenue = n2w(round(stock_data.info['totalRevenue'], 2))
+
+    results = "The total revenue of", company_name, "is", revenue, 'dollars'       # all revenue is given in dollars
+    speak(results)
+
+
+def getMarketCap(query):
+    compNameAndTicker = getCompNameAndTicker(query)
+    company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
+    stock_data = yf.Ticker(ticker)
+    revenue = n2w(round(stock_data.info['marketCap'], 2))
+
+    results = "The market capitalisation of", company_name, "is", revenue, data[company_name]['currency']      
+    speak(results)
+
+def get52WeekLow(query):
+    compNameAndTicker = getCompNameAndTicker(query)
+    company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
+    stock_data = yf.Ticker(ticker)
+    revenue = n2w(round(stock_data.info['fiftyTwoWeekLow'], 2))
+
+    results = "The fifty two week low of", company_name, "is", revenue, data[company_name]['currency']      
+    speak(results)
+
+def get52WeekHigh(query):
+    compNameAndTicker = getCompNameAndTicker(query)
+    company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
+    stock_data = yf.Ticker(ticker)
+    revenue = n2w(round(stock_data.info['fiftyTwoWeekHigh'], 2))
+
+    results = "The fifty two week high of", company_name, "is", revenue, data[company_name]['currency']      
+    speak(results)
+
+
 
 if __name__ == "__main__":
 
@@ -111,53 +167,23 @@ if __name__ == "__main__":
 
             query = takeCommand().lower()
 
+            intent = determineIntent(query)
             # Logic for executing tasks based on query
-
-            if 'stock price of' in query:
-                compNameAndTicker = getCompNameAndTicker(query)
-                company_name, ticker = compNameAndTicker[0], compNameAndTicker[1] 
-                stock_data = yf.Ticker(ticker)                        # makes a yfinance object
-                price = n2w(round(stock_data.info['currentPrice'], 2))# extracts current price and rounds it by 2 digits and also converts the numerical digits into words using n2w function
-
-                results = "The last trading price of", company_name, "is", price, data[company_name]['currency']
-                speak(results)
+            if intent == 'getStockPrice':
+                getStockPrice(query) 
             
-            elif 'total revenue of' in query:
-                compNameAndTicker = getCompNameAndTicker(query)
-                company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
-                stock_data = yf.Ticker(ticker)
-                revenue = n2w(round(stock_data.info['totalRevenue'], 2))
+            elif intent == 'getTotalRevenue':
+                getTotalRevenue(query)
 
-                results = "The total revenue of", company_name, "is", revenue, 'dollars'       # all revenue is given in dollars
-                speak(results)
+            elif intent == 'getMarketCap':
+                getMarketCap(query)
 
-            elif 'market capitalisation of' in query:
-                compNameAndTicker = getCompNameAndTicker(query)
-                company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
-                stock_data = yf.Ticker(ticker)
-                revenue = n2w(round(stock_data.info['marketCap'], 2))
+            elif intent =='get52WeekLow':
+                get52WeekLow(query)
 
-                results = "The market capitalisation of", company_name, "is", revenue, data[company_name]['currency']      
-                speak(results)
-
-            elif '52 week low of' in query:
-                compNameAndTicker = getCompNameAndTicker(query)
-                company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
-                stock_data = yf.Ticker(ticker)
-                revenue = n2w(round(stock_data.info['fiftyTwoWeekLow'], 2))
-
-                results = "The fifty two week low of", company_name, "is", revenue, data[company_name]['currency']      
-                speak(results)
-    
-            elif '52 week high of' in query:
-                compNameAndTicker = getCompNameAndTicker(query)
-                company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
-                stock_data = yf.Ticker(ticker)
-                revenue = n2w(round(stock_data.info['fiftyTwoWeekHigh'], 2))
-
-                results = "The fifty two week high of", company_name, "is", revenue, data[company_name]['currency']      
-                speak(results)
-
+            elif intent =='get52WeekHigh':
+                get52WeekHigh(query)
+                
             elif 'price to book ratio of' in query:
                 compNameAndTicker = getCompNameAndTicker(query)
                 company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
@@ -187,7 +213,6 @@ if __name__ == "__main__":
                 speak(results)
 
             # searching the wiki
-
             elif 'wikipedia' in query:
                 speak('Searching Wikipedia...')
                 query = query.replace("wikipedia", "")
@@ -247,7 +272,6 @@ if __name__ == "__main__":
                     'https://www.youtube.com/watch?v=weRTCk-mJyE&list=PLx0sYbCqOb8QTF1DCJVfQrtWknZFzuoAE&index=1')
 
             elif "who made you" in query:
-                # os.startfile('C:\\Users\\Ambade\\Downloads\\Queen.mp3')
                 speak(
                     "I am Elvis. Shounak, Somesh and Deepak are my creators.")
 
