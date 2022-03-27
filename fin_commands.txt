@@ -1,0 +1,8 @@
+1) get stock price
+2) get total revenue of
+3) get market cap
+4) get 52 week low
+5) get 52 week high
+6) get price to book ratio
+7) get free cash flow
+8) get operating cash flow

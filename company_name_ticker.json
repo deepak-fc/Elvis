@@ -1,0 +1,12 @@
+{
+    "Tesla":{"company_ticker":"TSLA","currency":"dollars"},
+    "Netflix":{"company_ticker":"NFLX","currency":"dollars"},
+    "Twitter":{"company_ticker":"TWTR","currency":"dollars"},
+    "Apple":{"company_ticker":"AAPL","currency":"dollars"},
+    "Google":{"company_ticker":"GOOGL","currency":"dollars"},
+    "Amazon":{"company_ticker":"AMZN","currency":"dollars"},
+    "Larsen And Toubro":{"company_ticker":"LT.NS","currency":"rupees"},
+    "Infosys":{"company_ticker":"INFY.NS","currency":"rupees"},
+    "Tcs":{"company_ticker":"TCS.NS","currency":"rupees"},
+    "Reliance":{"company_ticker":"RELIANCE.NS","currency":"rupees"}
+}
