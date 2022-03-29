@@ -11,11 +11,6 @@
     "Advanced Micro Devices":{"company_ticker":"AMD","currency":"dollars"},
     "Rolls-Royce Holdings":{"company_ticker":"RYCEY","currency":"dollars"},
 
-    ///////////////////////////////////////////////////////////////////////////////////
-    //
-    //////////////////////////////////////////////////////////////////////////////////
-
-
     "Larsen And Toubro":{"company_ticker":"LT.NS","currency":"rupees"},
     "Infosys":{"company_ticker":"INFY.NS","currency":"rupees"},
     "Tcs":{"company_ticker":"TCS.NS","currency":"rupees"},
