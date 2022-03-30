@@ -36,7 +36,7 @@ class Elvis:
 
         try:
             print("Recognizing...")
-            query = recognizer.recognize_google(audio, language='en-in')
+            query = recognizer.recognize_sphinx(audio, language='en-in')
             print(f"You said: {query}\n")
 
         except Exception:

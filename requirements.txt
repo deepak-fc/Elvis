@@ -6,3 +6,4 @@ googlesearch-python
 yfinance
 num2words
 pipwin
+kivy
