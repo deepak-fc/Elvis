@@ -30,13 +30,13 @@ class Elvis:
         with mic as source:
             print("Listening...")
             recognizer.adjust_for_ambient_noise(source, duration=0.1)
-            recognizer.pause_threshold = 1
+            recognizer.pause_threshold = 0.5
             recognizer.operation_timeout = 2
             audio = recognizer.listen(source)
 
         try:
             print("Recognizing...")
-            query = recognizer.recognize_sphinx(audio, language='en-in')
+            query = recognizer.recognize_google(audio, language='en-in')
             print(f"You said: {query}\n")
 
         except Exception:
@@ -59,7 +59,7 @@ class Elvis:
         index_of = query.split().index('of')
         company_name = " ".join(query.split()[index_of + 1:])
         company_name = company_name.strip().title()
-        ticker = self.companyData[company_name]["company_ticker"]
+        ticker = self.companyData[company_name]['company_ticker']
         return [company_name, ticker]
 
     ##########################################################################################
@@ -114,6 +114,44 @@ class Elvis:
         self.speak(results)
 
     ##########################################################################################
+    def getFreeCashFlow(self, query):
+        compNameAndTicker = self.getCompanyNameAndTicker(query)
+        company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
+        stock_data = yf.Ticker(ticker)
+        revenue = n2w(round(stock_data.info['freeCashflow'], 2))
+
+        results = "The free cash flow of", company_name, "is", revenue, self.companyData[company_name]['currency']
+        self.speak(results)
+    ##########################################################################################
+    def getOperatingCashFlow(self, query):
+        compNameAndTicker = self.getCompanyNameAndTicker(query)
+        company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
+        stock_data = yf.Ticker(ticker)
+        revenue = n2w(round(stock_data.info['operatingCashflow'], 2))
+
+        results = "The operating cash flow of", company_name, "is", revenue, self.companyData[company_name][
+                'currency']
+        self.speak(results)
+    ##########################################################################################
+    def getPeRatio(self, query):
+        compNameAndTicker = self.getCompanyNameAndTicker(query)
+        company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
+        stock_data = yf.Ticker(ticker)
+        pe_ratio = n2w(round(stock_data.info['trailingPE'], 2))
+
+        results = "The price to earnings ratio  of", company_name, "is", pe_ratio
+        self.speak(results)
+    ##########################################################################################
+    def getEps(self, query):
+        compNameAndTicker = self.getCompanyNameAndTicker(query)
+        company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
+        stock_data = yf.Ticker(ticker)
+        eps = n2w(round(stock_data.info['trailingEps'], 2))
+
+        results = "The earnings per share of", company_name, "is", eps, self.companyData[company_name][
+                'currency']
+        self.speak(results)
+     ##########################################################################################
     def processCommand(self, query):
         if query is None:
             return
@@ -135,24 +173,17 @@ class Elvis:
         elif intent == 'get52WeekHigh':
             self.get52WeekHigh(query)
 
-        elif 'free cash flow of' in query:
-            compNameAndTicker = self.getCompanyNameAndTicker(query)
-            company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
-            stock_data = yf.Ticker(ticker)
-            revenue = n2w(round(stock_data.info['freeCashflow'], 2))
+        elif intent == 'getFreeCashFlow':
+            self.getFreeCashFlow(query)
+            
+        elif intent == 'getOperatingCashFlow':
+            self.getOperatingCashFlow(query)
 
-            results = "The free cash flow of", company_name, "is", revenue, self.companyData[company_name]['currency']
-            self.speak(results)
+        elif intent == 'getEps':
+            self.getEps(query)
 
-        elif 'operating cash flow of' in query:
-            compNameAndTicker = self.getCompanyNameAndTicker(query)
-            company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
-            stock_data = yf.Ticker(ticker)
-            revenue = n2w(round(stock_data.info['operatingCashflow'], 2))
-
-            results = "The operating cash flow of", company_name, "is", revenue, self.companyData[company_name][
-                'currency']
-            self.speak(results)
+        elif intent == 'getPeRatio':
+            self.getPeRatio(query)
 
         elif "hi" in query:
             reply = "Hey there! How may I help you?"
@@ -196,7 +227,7 @@ class Elvis:
         else:
             self.speak("Good Evening!")
 
-        self.speak("Hi. I am Elvis. How may I help you?")
+        self.speak("Hi I am Elvis, How may I help you?")
 
     ##########################################################################################
     def speak(self, text):

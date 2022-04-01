@@ -2,21 +2,37 @@
 
 	"intent_fun_matching":
 	[
-    {
-        "fun": "getStockPrice",
-        "patterns":["stock price of", "current price of", "last trading price of", "current market price of"]
-    },
-    {
-        "fun": "getMarketCap",
-        "patterns":["market capitalisation of", "market capitalization of", "market cap of", "market capital of"]
-    },
-    {
-        "fun": "get52WeekLow",
-        "patterns":["52 week low of", "one year low of", "fifty two week of"]
-    },
-    {
-        "fun": "get52WeekHigh",
-        "patterns":["52 week high of", "one year high of", "fifty two high of"]
-    }
+        {
+            "fun": "getStockPrice",
+            "patterns":["stock price of", "current price of", "last trading price of", "current market price of"]
+        },
+        {
+            "fun": "getMarketCap",
+            "patterns":["market capitalisation of", "market capitalization of", "market cap of", "market capital of"]
+        },
+        {
+            "fun": "get52WeekLow",
+            "patterns":["52 week low of", "one year low of", "fifty two week of"]
+        },
+        {
+            "fun": "get52WeekHigh",
+            "patterns":["52 week high of", "one year high of", "fifty two high of"]
+        },
+        {
+            "fun": "getFreeCashFlow",
+            "patterns":["free cash flow of", "fcf of"]
+        },
+        {
+            "fun": "getOperatingCashFlow",
+            "patterns":["operating cash flow of", "ocf of", "cash flow from operating activities of"]
+        },
+        {
+            "fun": "getEps",
+            "patterns":["earnings per share of", "eps of"]
+        },
+        {
+            "fun": "getPeRatio",
+            "patterns":["price to earnings ratio of", "p e ratio of", "pe ratio of", "pe of", "price earnings ratio","price to earnings of", "price earnings of"]
+        }
 	]
 }
