@@ -4,7 +4,7 @@
 	[
         {
             "fun": "getStockPrice",
-            "patterns":["stock price of", "current price of", "last trading price of", "current market price of"]
+            "patterns":["stock price of", "current price of", "last trading price of", "current market price of", "ltp of"]
         },
         {
             "fun": "getMarketCap",
@@ -23,6 +23,14 @@
             "patterns":["free cash flow of", "fcf of"]
         },
         {
+            "fun": "getForwardEps",
+            "patterns":["forward earnings per share of", "forward eps of"]
+        },
+        {
+            "fun": "getForwardPe",
+            "patterns":["forward price to earnings ratio of", "forward p e ratio of", "forward pe ratio of", "forward pe of", "forward price earnings ratio","forward price to earnings of", "forward price earnings of"]
+        },
+        {
             "fun": "getOperatingCashFlow",
             "patterns":["operating cash flow of", "ocf of", "cash flow from operating activities of"]
         },
@@ -33,6 +41,27 @@
         {
             "fun": "getPeRatio",
             "patterns":["price to earnings ratio of", "p e ratio of", "pe ratio of", "pe of", "price earnings ratio","price to earnings of", "price earnings of"]
+        },
+        {
+            "fun": "getEbitda",
+            "patterns":["ebitda of", "earnings before interest taxes depreciation and amortization of"]
+        },
+        {
+            "fun": "getDebtToEquity",
+            "patterns":["debt to equity ratio of", "de ratio of"]
+        },
+        {
+            "fun": "getTargetHighPrice",
+            "patterns":["target price of", "target high price of", "target high of"]
+        },
+      
+        {
+            "fun": "getFiftyDma",
+            "patterns":["50 day moving average of","fifty day moving average of", "fifty day average of", "fifty dma of", "50 dma of"]
+        }, 
+        {
+            "fun": "getPegRatio",
+            "patterns":["price earning to growth ratio of", "peg ratio of"]
         }
 	]
 }

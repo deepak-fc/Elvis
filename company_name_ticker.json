@@ -7,7 +7,7 @@
     "Amazon":{"company_ticker":"AMZN","currency":"dollars"},
     "Bank Of America":{"company_ticker":"BAC","currency":"dollars"},
     "Nvidia":{"company_ticker":"NVDA","currency":"dollars"},
-    "AMC Entertainment Holdings":{"company_ticker":"AMC","currency":"dollars"},
+    "Amc":{"company_ticker":"AMC","currency":"dollars"},
     "Amd":{"company_ticker":"AMD","currency":"dollars"},
     "Rolls-Royce":{"company_ticker":"RYCEY","currency":"dollars"},
 
@@ -61,5 +61,6 @@
     "Jindal Steel And Power":{"company_ticker":"JINDALSTEL.NS","currency":"rupees"},
     "Irctc":{"company_ticker":"IRCTC.NS","currency":"rupees"},
     "Punjab National Bank":{"company_ticker":"PNB.NS","currency":"rupees"},
-    "Symphony":{"company_ticker":"SYMPHONY.NS","currency":"rupees"}
+    "Symphony":{"company_ticker":"SYMPHONY.NS","currency":"rupees"},
+    "Reliance":{"company_ticker":"RELIANCE.NS","currency":"rupees"}
 }

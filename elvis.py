@@ -5,6 +5,7 @@ import yfinance as yf
 import webbrowser
 import pyttsx3
 import json
+import sys
 
 
 class Elvis:
@@ -23,6 +24,11 @@ class Elvis:
             self.intentsData = json.load(d)
 
     ##########################################################################################
+    def runElvis(self):
+        userVoiceCommand = self.getUserVoiceCommand()
+        self.processCommand(userVoiceCommand)
+    ##########################################################################################
+
     def getUserVoiceCommand(self):
         recognizer = sr.Recognizer()
         mic = sr.Microphone()
@@ -53,26 +59,116 @@ class Elvis:
             for pattern in self.intentsData['intent_fun_matching'][i]['patterns']:
                 if pattern in query:
                     return self.intentsData['intent_fun_matching'][i]['fun']
-
     ##########################################################################################
+
+    def getEbitda(self, query):
+        compNameAndTicker = self.getCompanyNameAndTicker(query)
+        company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
+        stock_data = yf.Ticker(ticker)
+        ebitda = n2w(round(stock_data.info['ebitda'], 2))
+
+        results = "The EBITDA of", company_name, "is", ebitda, self.companyData[company_name][
+            'currency']
+        self.speak(results)
+    ##########################################################################################
+
+    def getDebtToEquity(self, query):
+        compNameAndTicker = self.getCompanyNameAndTicker(query)
+        company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
+        stock_data = yf.Ticker(ticker)
+        d2e = n2w(round(stock_data.info['debtToEquity'], 2))
+
+        results = "The debt to equity ratio of", company_name, "is", d2e
+        self.speak(results)
+    ##########################################################################################
+
+    def getTargetHighPrice(self, query):
+        compNameAndTicker = self.getCompanyNameAndTicker(query)
+        company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
+        stock_data = yf.Ticker(ticker)
+        tp = n2w(round(stock_data.info['targetHighPrice'], 2))
+
+        results = "The target high price of", company_name, "is", tp, self.companyData[company_name][
+            'currency']
+        self.speak(results)
+    ##########################################################################################
+
+    def getForwardEps(self, query):
+        compNameAndTicker = self.getCompanyNameAndTicker(query)
+        company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
+        stock_data = yf.Ticker(ticker)
+        feps = n2w(round(stock_data.info['forwardEps'], 2))
+
+        results = "The forward earnings per share of", company_name, "is", feps, self.companyData[company_name][
+            'currency']
+        self.speak(results)
+    ##########################################################################################
+
+    def getForwardPe(self, query):
+        compNameAndTicker = self.getCompanyNameAndTicker(query)
+        company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
+        stock_data = yf.Ticker(ticker)
+        feps = n2w(round(stock_data.info['forwardPE'], 2))
+
+        results = "The forward price to earning ratio of", company_name, "is", feps
+        self.speak(results)
+    ##########################################################################################
+
+    def getFiftyDma(self, query):
+        compNameAndTicker = self.getCompanyNameAndTicker(query)
+        company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
+        stock_data = yf.Ticker(ticker)
+        fiftyDma = n2w(round(stock_data.info['fiftyDayAverage'], 2))
+
+        results = "The fity day moving average of", company_name, "is", fiftyDma, self.companyData[company_name][
+            'currency']
+        self.speak(results)
+    ##########################################################################################
+
+    def getPegRatio(self, query):
+        compNameAndTicker = self.getCompanyNameAndTicker(query)
+        company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
+        stock_data = yf.Ticker(ticker)
+        peg = n2w(round(stock_data.info['trailingPegRatio'], 2))
+
+        results = "The price earnings to growth ratio of", company_name, "is", peg
+        self.speak(results)
+    ##########################################################################################
+
     def getCompanyNameAndTicker(self, query):
         index_of = query.split().index('of')
         company_name = " ".join(query.split()[index_of + 1:])
         company_name = company_name.strip().title()
-        ticker = self.companyData[company_name]['company_ticker']
-        return [company_name, ticker]
+
+        try:
+
+            ticker = self.companyData[company_name]['company_ticker']
+            return [company_name, ticker]
+
+        except KeyError:
+            results = "It seems you have said an invalid company name, please say a valid name and try again"
+            self.speak(results)
+            self.runElvis()
 
     ##########################################################################################
     def getStockPrice(self, query):
         compNameAndTicker = self.getCompanyNameAndTicker(query)
-        company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
-        stock_data = yf.Ticker(ticker)
-        price = n2w(round(stock_data.info['currentPrice'], 2))
 
-        results = "The last trading price of", company_name, "is", price, self.companyData[company_name]['currency']
-        self.speak(results)
+        try:
+
+            company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
+            stock_data = yf.Ticker(ticker)
+            price = n2w(round(stock_data.info['currentPrice'], 2))
+
+            results = "The last trading price of", company_name, "is", price, self.companyData[
+                company_name]['currency']
+            self.speak(results)
+
+        except Exception as e:
+            print(e)
 
     ##########################################################################################
+
     def getTotalRevenue(self, query):
         compNameAndTicker = self.getCompanyNameAndTicker(query)
         company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
@@ -100,7 +196,8 @@ class Elvis:
         stock_data = yf.Ticker(ticker)
         revenue = n2w(round(stock_data.info['fiftyTwoWeekLow'], 2))
 
-        results = "The fifty two week low of", company_name, "is", revenue, self.companyData[company_name]['currency']
+        results = "The fifty two week low of", company_name, "is", revenue, self.companyData[
+            company_name]['currency']
         self.speak(results)
 
     ##########################################################################################
@@ -110,7 +207,8 @@ class Elvis:
         stock_data = yf.Ticker(ticker)
         revenue = n2w(round(stock_data.info['fiftyTwoWeekHigh'], 2))
 
-        results = "The fifty two week high of", company_name, "is", revenue, self.companyData[company_name]['currency']
+        results = "The fifty two week high of", company_name, "is", revenue, self.companyData[
+            company_name]['currency']
         self.speak(results)
 
     ##########################################################################################
@@ -120,9 +218,11 @@ class Elvis:
         stock_data = yf.Ticker(ticker)
         revenue = n2w(round(stock_data.info['freeCashflow'], 2))
 
-        results = "The free cash flow of", company_name, "is", revenue, self.companyData[company_name]['currency']
+        results = "The free cash flow of", company_name, "is", revenue, self.companyData[
+            company_name]['currency']
         self.speak(results)
     ##########################################################################################
+
     def getOperatingCashFlow(self, query):
         compNameAndTicker = self.getCompanyNameAndTicker(query)
         company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
@@ -130,9 +230,10 @@ class Elvis:
         revenue = n2w(round(stock_data.info['operatingCashflow'], 2))
 
         results = "The operating cash flow of", company_name, "is", revenue, self.companyData[company_name][
-                'currency']
+            'currency']
         self.speak(results)
     ##########################################################################################
+
     def getPeRatio(self, query):
         compNameAndTicker = self.getCompanyNameAndTicker(query)
         company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
@@ -142,6 +243,7 @@ class Elvis:
         results = "The price to earnings ratio  of", company_name, "is", pe_ratio
         self.speak(results)
     ##########################################################################################
+
     def getEps(self, query):
         compNameAndTicker = self.getCompanyNameAndTicker(query)
         company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
@@ -149,13 +251,15 @@ class Elvis:
         eps = n2w(round(stock_data.info['trailingEps'], 2))
 
         results = "The earnings per share of", company_name, "is", eps, self.companyData[company_name][
-                'currency']
+            'currency']
         self.speak(results)
      ##########################################################################################
+
     def processCommand(self, query):
         if query is None:
             return
 
+        print(len(self.intentsData['intent_fun_matching']))
         intent = self.determineIntent(query)
 
         if intent == 'getStockPrice':
@@ -175,7 +279,7 @@ class Elvis:
 
         elif intent == 'getFreeCashFlow':
             self.getFreeCashFlow(query)
-            
+
         elif intent == 'getOperatingCashFlow':
             self.getOperatingCashFlow(query)
 
@@ -184,6 +288,27 @@ class Elvis:
 
         elif intent == 'getPeRatio':
             self.getPeRatio(query)
+
+        elif intent == 'getEbitda':
+            self.getEbitda(query)
+
+        elif intent == 'getDebtToEquity':
+            self.getDebtToEquity(query)
+
+        elif intent == 'getTargetHighPrice':
+            self.getTargetHighPrice(query)
+
+        elif intent == 'getForwardEps':
+            self.getForwardEps(query)
+
+        elif intent == 'getForwardPe':
+            self.getForwardPe(query)
+
+        elif intent == 'getFiftyDma':
+            self.getFiftyDma(query)
+
+        elif intent == 'getPegRatio':
+            self.getPegRatio(query)
 
         elif "hi" in query:
             reply = "Hey there! How may I help you?"
@@ -194,7 +319,8 @@ class Elvis:
             self.speak(reply)
 
         elif "who made you" in query:
-            self.speak("I am Elvis. Shounak, Somesh and Deepak are my creators.")
+            self.speak(
+                "I am Elvis. Shounak, Somesh and Deepak are my creators.")
 
         elif "what is the time" in query:
             strTime = datetime.now().strftime("%H:%M:%S")
