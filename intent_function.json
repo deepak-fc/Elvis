@@ -62,6 +62,14 @@
         {
             "fun": "getPegRatio",
             "patterns":["price earning to growth ratio of", "peg ratio of"]
+        },
+        {
+            "fun": "googlesearch",
+            "patterns":["search for", "please search for", "search on", "search about"]
+        },
+        {
+            "fun": "youtube",
+            "patterns":["play on youtube", "search on youtube" ]
         }
 	]
 }
