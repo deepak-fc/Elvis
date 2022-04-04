@@ -17,7 +17,7 @@ class Elvis:
     
     ##########################################################################################
     def __init__(self):
-        self.voiceEngine = pyttsx3.init('sapi5')
+        self.voiceEngine = pyttsx3.init()
         
         with open('company_name_ticker.json') as f:
             self.companyData = json.load(f)
