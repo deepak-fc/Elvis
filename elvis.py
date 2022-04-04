@@ -1,3 +1,4 @@
+from urllib import response
 from num2words import num2words as n2w
 import speech_recognition as sr
 from datetime import *
@@ -13,10 +14,11 @@ class Elvis:
     companyData = None
     intentsData = None
 
+    
     ##########################################################################################
     def __init__(self):
-        self.voiceEngine = pyttsx3.init()
-
+        self.voiceEngine = pyttsx3.init('sapi5')
+        
         with open('company_name_ticker.json') as f:
             self.companyData = json.load(f)
 
@@ -239,9 +241,9 @@ class Elvis:
         company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
         stock_data = yf.Ticker(ticker)
         pe_ratio = n2w(round(stock_data.info['trailingPE'], 2))
-
         results = "The price to earnings ratio  of", company_name, "is", pe_ratio
         self.speak(results)
+
     ##########################################################################################
 
     def getEps(self, query):
@@ -254,6 +256,20 @@ class Elvis:
             'currency']
         self.speak(results)
      ##########################################################################################
+
+    def googlesearch(self, query):
+            search_term = query.split("for")[-1]  
+            url = f"https://google.com/search?q={search_term}"  
+            webbrowser.get().open(url)  
+            self.speak(f'Here is what I found for {search_term} on google') 
+    ##########################################################################################
+
+    def youtube(self, query):
+            search_term = query.split("youtube")[-1]  
+            url = f"https://youtube.com/search?q={search_term}"  
+            webbrowser.get().open(url)  
+            self.speak(f'Here is what I found for {search_term} on youtube')
+    ##########################################################################################
 
     def processCommand(self, query):
         if query is None:
@@ -310,12 +326,18 @@ class Elvis:
         elif intent == 'getPegRatio':
             self.getPegRatio(query)
 
-        elif "hi" in query:
-            reply = "Hey there! How may I help you?"
-            self.speak(reply)
+        elif intent == 'googlesearch':
+            self.googlesearch(query)
+
+        elif intent == 'youtube':
+            self.youtube(query)
 
         elif "how are you" in query:
             reply = "I'm doing good and how are you?"
+            self.speak(reply)
+
+        elif "hi" in query:
+            reply = "hi, how can i help you"
             self.speak(reply)
 
         elif "who made you" in query:
@@ -325,23 +347,8 @@ class Elvis:
         elif "what is the time" in query:
             strTime = datetime.now().strftime("%H:%M:%S")
             self.speak(f"The current time is {strTime}")
-
-        elif "open youtube" in query:
-            self.speak("opening youtube")
-            webbrowser.open("www.youtube.com")
-
-        elif "open google" in query:
-            self.speak("opening Google")
-            webbrowser.open("www.google.com")
-
-        elif "open stack overflow" in query:
-            self.speak("opening stackoverflow")
-            webbrowser.open("www.stackoverflow.com")
-
-        elif 'open github' in query:
-            self.speak("opening github")
-            webbrowser.open("www.github.com")
-
+         
+        
     ##########################################################################################
     def greet(self):
         currentHourOfTheDay = int(datetime.now().hour)
