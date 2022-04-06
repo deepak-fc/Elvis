@@ -64,6 +64,18 @@
             "patterns":["price earning to growth ratio of", "peg ratio of"]
         },
         {
+            "fun": "getdividendRate",
+            "patterns":["dividend rate of", "current dividend rate of"]
+        },
+        {
+            "fun": "getlastDividendValue",
+            "patterns":["last dividend value of", "previous dividend value of"]
+        },
+        {
+            "fun": "get52WeekChange",
+            "patterns":["52 week change of", "fifty two week change of"]
+        },
+        {
             "fun": "googlesearch",
             "patterns":["search for", "please search for", "search on", "search about"]
         },
