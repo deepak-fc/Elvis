@@ -6,3 +6,15 @@
 6) get price to book ratio
 7) get free cash flow
 8) get operating cash flow
+9) get ebitda
+10) get debt to equity
+11) get target high price
+12) get forward earnings per share
+13) get forward price to earnings ratio
+14) get fifty day moving average
+15) get price earnings to growth ratio
+16) get earnings per share
+17) get price to earning ratio
+18) get dividend rate
+19) get last dividend value
+20) get 52 week change
