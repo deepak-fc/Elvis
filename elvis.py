@@ -121,7 +121,6 @@ class Elvis:
         company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
         stock_data = yf.Ticker(ticker)
         fiftyDma = n2w(round(stock_data.info['fiftyDayAverage'], 2))
-
         results = "The fity day moving average of", company_name, "is", fiftyDma, self.companyData[company_name][
             'currency']
         self.speak(results)
@@ -255,8 +254,39 @@ class Elvis:
         results = "The earnings per share of", company_name, "is", eps, self.companyData[company_name][
             'currency']
         self.speak(results)
-     ##########################################################################################
+    ##########################################################################################
+    
+    def getdividendRate(self, query):
+        compNameAndTicker = self.getCompanyNameAndTicker(query)
+        company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
+        stock_data = yf.Ticker(ticker)
+        divRate = n2w(round(stock_data.info['dividendRate'], 2))
 
+        results = "The dividend rate of", company_name, "is", divRate
+        self.speak(results)
+    ##########################################################################################
+
+    def getlastDividendValue(self, query):
+        compNameAndTicker = self.getCompanyNameAndTicker(query)
+        company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
+        stock_data = yf.Ticker(ticker)
+        ldiv = n2w(round(stock_data.info['lastDividendValue'], 2))
+
+        results = "The last dividend value of", company_name, "is", ldiv, self.companyData[company_name][
+            'currency']
+        self.speak(results)
+    ##########################################################################################
+
+    def get52WeekChange(self, query):
+        compNameAndTicker = self.getCompanyNameAndTicker(query)
+        company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
+        stock_data = yf.Ticker(ticker)
+        weekchng = n2w(round(stock_data.info['52WeekChange'], 2))
+
+        results = "The fifty two week change of", company_name, "is", weekchng
+        self.speak(results)
+    ##########################################################################################
+   
     def googlesearch(self, query):
             search_term = query.split("for")[-1]  
             url = f"https://google.com/search?q={search_term}"  
@@ -325,6 +355,15 @@ class Elvis:
 
         elif intent == 'getPegRatio':
             self.getPegRatio(query)
+
+        elif intent == 'getdividendRate':
+            self.getdividendRate(query)
+
+        elif intent == 'getlastDividendValue':
+            self.getlastDividendValue(query)
+
+        elif intent == 'get52WeekChange':
+            self.get52WeekChange(query)
 
         elif intent == 'googlesearch':
             self.googlesearch(query)
