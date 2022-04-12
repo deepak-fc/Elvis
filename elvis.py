@@ -14,11 +14,11 @@ class Elvis:
     companyData = None
     intentsData = None
 
-    
     ##########################################################################################
+
     def __init__(self):
         self.voiceEngine = pyttsx3.init()
-        
+
         with open('company_name_ticker.json') as f:
             self.companyData = json.load(f)
 
@@ -255,7 +255,7 @@ class Elvis:
             'currency']
         self.speak(results)
     ##########################################################################################
-    
+
     def getdividendRate(self, query):
         compNameAndTicker = self.getCompanyNameAndTicker(query)
         company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
@@ -286,26 +286,25 @@ class Elvis:
         results = "The fifty two week change of", company_name, "is", weekchng
         self.speak(results)
     ##########################################################################################
-   
+
     def googlesearch(self, query):
-            search_term = query.split("for")[-1]  
-            url = f"https://google.com/search?q={search_term}"  
-            webbrowser.get().open(url)  
-            self.speak(f'Here is what I found for {search_term} on google') 
+        search_term = query.split("for")[-1]
+        url = f"https://google.com/search?q={search_term}"
+        webbrowser.get().open(url)
+        self.speak(f'Here is what I found for {search_term} on google')
     ##########################################################################################
 
     def youtube(self, query):
-            search_term = query.split("youtube")[-1]  
-            url = f"https://youtube.com/search?q={search_term}"  
-            webbrowser.get().open(url)  
-            self.speak(f'Here is what I found for {search_term} on youtube')
+        search_term = query.split("youtube")[-1]
+        url = f"https://youtube.com/search?q={search_term}"
+        webbrowser.get().open(url)
+        self.speak(f'Here is what I found for {search_term} on youtube')
     ##########################################################################################
 
     def processCommand(self, query):
         if query is None:
             return
 
-        print(len(self.intentsData['intent_fun_matching']))
         intent = self.determineIntent(query)
 
         if intent == 'getStockPrice':
@@ -386,9 +385,9 @@ class Elvis:
         elif "what is the time" in query:
             strTime = datetime.now().strftime("%H:%M:%S")
             self.speak(f"The current time is {strTime}")
-         
-        
+
     ##########################################################################################
+
     def greet(self):
         currentHourOfTheDay = int(datetime.now().hour)
 
