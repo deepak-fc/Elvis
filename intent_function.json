@@ -1,5 +1,4 @@
 {
-
 	"intent_fun_matching":
 	[
         {
@@ -54,7 +53,6 @@
             "fun": "getTargetHighPrice",
             "patterns":["target price of", "target high price of", "target high of"]
         },
-      
         {
             "fun": "getFiftyDma",
             "patterns":["50 day moving average of","fifty day moving average of", "fifty day average of", "fifty dma of", "50 dma of"]
@@ -64,11 +62,11 @@
             "patterns":["price earning to growth ratio of", "peg ratio of"]
         },
         {
-            "fun": "getdividendRate",
+            "fun": "getDividendRate",
             "patterns":["dividend rate of", "current dividend rate of"]
         },
         {
-            "fun": "getlastDividendValue",
+            "fun": "getLastDividendValue",
             "patterns":["last dividend value of", "previous dividend value of"]
         },
         {
@@ -76,27 +74,27 @@
             "patterns":["52 week change of", "fifty two week change of"]
         },
         {
-            "fun": "getpreviousClose",
+            "fun": "getPreviousClose",
             "patterns":["previous close of", "previous day close of"]
         },
         {
-            "fun": "getregularMarketOpen",
+            "fun": "getRegularMarketOpen",
             "patterns":["opening price of", "market opening price of", "todays opening price of"]
         },
         {
-            "fun": "getregularMarketDayLow",
-            "patterns":["day low price of", "todays day low price of"]
+            "fun": "getRegularMarketDayLow",
+            "patterns":["day low price of", "today's day low price of"]
         },
         {
-            "fun": "getregularMarketDayHigh",
-            "patterns":["day high price of", "todays day high price of"]
+            "fun": "getRegularMarketDayHigh",
+            "patterns":["day high price of", "today's day high price of"]
         },
         {
-            "fun": "getsector",
+            "fun": "getSector",
             "patterns":["sector of", "sector"]
         },
         {
-            "fun": "googlesearch",
+            "fun": "googleSearch",
             "patterns":["search for", "please search for", "search on", "search about"]
         },
         {
