@@ -240,8 +240,20 @@ class Elvis:
         company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
         stock_data = yf.Ticker(ticker)
         pe_ratio = n2w(round(stock_data.info['trailingPE'], 2))
+
         results = "The price to earnings ratio  of", company_name, "is", pe_ratio
         self.speak(results)
+
+        if (pe_ratio < "10"):
+            self.speak("Elvis thinks right now it is not good for investment but still you can keep it on watch")
+        elif (pe_ratio >= "10" and pe_ratio <= "15"):
+            self.speak("Elvis thinks it can be considered for long term profits, still you can keep it on watch")
+        elif(pe_ratio >"20" and pe_ratio <= "30"):
+            self.speak("Elvis thinks you can consider to invest")
+        else:
+            self.speak("Elvis thinks its high right now and should hold")
+
+        self.speak("All such information is for assistance only and shall not be taken as the sole basis for making any investment decisions.")
 
     ##########################################################################################
 
@@ -286,7 +298,61 @@ class Elvis:
         results = "The fifty two week change of", company_name, "is", weekchng
         self.speak(results)
     ##########################################################################################
+    
+    def getpreviousClose(self, query):
+        compNameAndTicker = self.getCompanyNameAndTicker(query)
+        company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
+        stock_data = yf.Ticker(ticker)
+        prevclose = n2w(round(stock_data.info['previousClose'], 2))
 
+        results = "The previous close of", company_name, "is", prevclose, self.companyData[company_name][
+            'currency']
+        self.speak(results)
+    ##########################################################################################
+
+    def getregularMarketOpen(self, query):
+        compNameAndTicker = self.getCompanyNameAndTicker(query)
+        company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
+        stock_data = yf.Ticker(ticker)
+        openprice = n2w(round(stock_data.info['regularMarketOpen'], 2))
+
+        results = "The opening price of", company_name, "is", openprice, self.companyData[company_name][
+            'currency']
+        self.speak(results)
+    ##########################################################################################
+
+    def getregularMarketDayLow(self, query):
+        compNameAndTicker = self.getCompanyNameAndTicker(query)
+        company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
+        stock_data = yf.Ticker(ticker)
+        daylow = n2w(round(stock_data.info['regularMarketDayLow'], 2))
+
+        results = "The day low price of", company_name, "is", daylow, self.companyData[company_name][
+            'currency']
+        self.speak(results)
+    ##########################################################################################
+
+    def getregularMarketDayHigh(self, query):
+        compNameAndTicker = self.getCompanyNameAndTicker(query)
+        company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
+        stock_data = yf.Ticker(ticker)
+        dayhigh = n2w(round(stock_data.info['regularMarketDayHigh'], 2))
+
+        results = "The day high price of", company_name, "is", dayhigh, self.companyData[company_name][
+            'currency']
+        self.speak(results)
+    ##########################################################################################
+
+    def getsector(self, query):
+        compNameAndTicker = self.getCompanyNameAndTicker(query)
+        company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
+        stock_data = yf.Ticker(ticker)
+        sec = stock_data.info['sector']
+
+        results = "The", company_name, "belongs to", sec, "sector"
+        self.speak(results)
+    ##########################################################################################
+   
     def googlesearch(self, query):
         search_term = query.split("for")[-1]
         url = f"https://google.com/search?q={search_term}"
@@ -363,7 +429,22 @@ class Elvis:
 
         elif intent == 'get52WeekChange':
             self.get52WeekChange(query)
+        
+        elif intent == 'getpreviousClose':
+            self.getpreviousClose(query)
 
+        elif intent == 'getregularMarketOpen':
+            self.getregularMarketOpen(query)
+
+        elif intent == 'getregularMarketDayLow':
+            self.getregularMarketDayLow(query)
+
+        elif intent == 'getregularMarketDayHigh':
+            self.getregularMarketDayHigh(query)
+        
+        elif intent == 'getsector':
+            self.getsector(query)
+            
         elif intent == 'googlesearch':
             self.googlesearch(query)
 

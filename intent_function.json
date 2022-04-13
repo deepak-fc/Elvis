@@ -76,6 +76,26 @@
             "patterns":["52 week change of", "fifty two week change of"]
         },
         {
+            "fun": "getpreviousClose",
+            "patterns":["previous close of", "previous day close of"]
+        },
+        {
+            "fun": "getregularMarketOpen",
+            "patterns":["opening price of", "market opening price of", "todays opening price of"]
+        },
+        {
+            "fun": "getregularMarketDayLow",
+            "patterns":["day low price of", "todays day low price of"]
+        },
+        {
+            "fun": "getregularMarketDayHigh",
+            "patterns":["day high price of", "todays day high price of"]
+        },
+        {
+            "fun": "getsector",
+            "patterns":["sector of", "sector"]
+        },
+        {
             "fun": "googlesearch",
             "patterns":["search for", "please search for", "search on", "search about"]
         },

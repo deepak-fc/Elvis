@@ -18,3 +18,8 @@
 18) get dividend rate
 19) get last dividend value
 20) get 52 week change
+21) get previous close
+22) get regular market opening price
+23) get regular market day low price
+24) get regular market day high price
+25) get sector
