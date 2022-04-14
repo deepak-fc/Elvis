@@ -1,15 +1,30 @@
 <MainWidget>
 
     FloatLayout:
-
+        
         size: root.width, root.height
+        
 
         Button:
-            size_hint: (0.2, 0.3) 
-            pos_hint: {"x":0.4, "top":0.69}
-            background_normal: 'micro.jpg'
+            size_hint: (0.2, 0.4) # (width_proportion, heigth_proportion)
+            pos_hint:{"x":0.4, "top":0.69}
+            background_normal: 'micro2.jpg'
             color:(1, 1, 1, 1)
-            font_size: 20
             on_press: root.runElvis()
+            
+          
+        Label:
+            id: output_screen
+            text: "" 
+            pos_hint:{"x":0.35, "top":1}
+            color: (0,0,0,1)
+            bold: True
+            italic: True
+            font_size: 22
+            padding: (20,20)
+            spacing: (20,0)
+
+
+
 
 
