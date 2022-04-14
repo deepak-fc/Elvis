@@ -256,11 +256,11 @@ def getPeRatio(query):
     results = "The price to earnings ratio  of", company_name, "is", pe_ratio
     speak(results)
 
-    if (pe_ratio < "10"):
+    if pe_ratio < "10":
         speak("Elvis thinks right now it is not good for investment but still you can keep it on watch")
-    elif (pe_ratio >= "10" and pe_ratio <= "15"):
+    elif "10" <= pe_ratio <= "15":
         speak("Elvis thinks it can be considered for long term profits, still you can keep it on watch")
-    elif (pe_ratio > "20" and pe_ratio <= "30"):
+    elif "20" < pe_ratio <= "30":
         speak("Elvis thinks you can consider to invest")
     else:
         speak("Elvis thinks its high right now and should hold")
