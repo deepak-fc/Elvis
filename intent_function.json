@@ -6,6 +6,10 @@
             "patterns":["stock price of", "current price of", "last trading price of", "current market price of", "ltp of"]
         },
         {
+            "fun": "getTotalRevenue",
+            "patterns":["revenue of", "total revenue of"]
+        },
+        {
             "fun": "getMarketCap",
             "patterns":["market capitalisation of", "market capitalization of", "market cap of", "market capital of"]
         },
@@ -18,28 +22,16 @@
             "patterns":["52 week high of", "one year high of", "fifty two high of"]
         },
         {
+            "fun": "getPriceToBook",
+            "patterns":["price to book ratio of", "price to book of"]
+        },
+        {
             "fun": "getFreeCashFlow",
             "patterns":["free cash flow of", "fcf of"]
         },
         {
-            "fun": "getForwardEps",
-            "patterns":["forward earnings per share of", "forward eps of"]
-        },
-        {
-            "fun": "getForwardPe",
-            "patterns":["forward price to earnings ratio of", "forward p e ratio of", "forward pe ratio of", "forward pe of", "forward price earnings ratio","forward price to earnings of", "forward price earnings of"]
-        },
-        {
             "fun": "getOperatingCashFlow",
             "patterns":["operating cash flow of", "ocf of", "cash flow from operating activities of"]
-        },
-        {
-            "fun": "getEps",
-            "patterns":["earnings per share of", "eps of"]
-        },
-        {
-            "fun": "getPeRatio",
-            "patterns":["price to earnings ratio of", "p e ratio of", "pe ratio of", "pe of", "price earnings ratio","price to earnings of", "price earnings of"]
         },
         {
             "fun": "getEbitda",
@@ -54,12 +46,28 @@
             "patterns":["target price of", "target high price of", "target high of"]
         },
         {
+            "fun": "getForwardEps",
+            "patterns":["forward earnings per share of", "forward eps of"]
+        },
+        {
+            "fun": "getForwardPe",
+            "patterns":["forward price to earnings ratio of", "forward p e ratio of", "forward pe ratio of", "forward pe of", "forward price earnings ratio","forward price to earnings of", "forward price earnings of"]
+        },
+        {
             "fun": "getFiftyDma",
             "patterns":["50 day moving average of","fifty day moving average of", "fifty day average of", "fifty dma of", "50 dma of"]
-        }, 
+        },
         {
             "fun": "getPegRatio",
             "patterns":["price earning to growth ratio of", "peg ratio of"]
+        },
+        {
+            "fun": "getEps",
+            "patterns":["earnings per share of", "eps of"]
+        },
+        {
+            "fun": "getPeRatio",
+            "patterns":["price to earnings ratio of", "p e ratio of", "pe ratio of", "pe of", "price earnings ratio","price to earnings of", "price earnings of"]
         },
         {
             "fun": "getDividendRate",
