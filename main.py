@@ -66,6 +66,7 @@ def getUserVoiceCommand():
 
     with mic as source:
         print("Listening...")
+        recognizer.energy_threshold = 10000
         recognizer.adjust_for_ambient_noise(source, duration=0.1)
         recognizer.pause_threshold = 0.5
         recognizer.operation_timeout = 2
@@ -129,10 +130,17 @@ def getCompanyNameAndTicker(query):
         ticker = companyData[company_name]['company_ticker']
         return [company_name, ticker]
 
-    except KeyError:
-        results = "It seems you have said an invalid company name, please say a valid name and try again"
+    except KeyError :
+        results = f"It seems you have said an invalid company name, please say a valid name and try again"
         speak(results)
 
+##########################################################################################
+def exceptions(query):
+    vocal_results = f"Sorry, the data is not available"
+    speak(vocal_results)
+
+    results = f"Sorry, the data is not available"
+    return results
 
 ##########################################################################################
 def getStockPrice(query):
@@ -142,13 +150,18 @@ def getStockPrice(query):
 
     company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
     stock_data = yf.Ticker(ticker)
-    price = round(stock_data.info['currentPrice'], 2)
 
-    vocal_results = f"The last trading price of {company_name}, is {n2w(price)}, {companyData[company_name]['currency']}"
-    speak(vocal_results)
+    try :
+        price = round(stock_data.info['currentPrice'], 2)
+        vocal_results = f"The last trading price of {company_name}, is {n2w(price)}{companyData[company_name]['currency']}"
+        speak(vocal_results)
 
-    results = f"The last trading price of {company_name}, is {getSymbol(companyData[company_name]['currency'])}{price}"
-    return results
+        results = f"The last trading price of {company_name}, is {getSymbol(companyData[company_name]['currency'])}{price}"
+        return results
+
+    except :
+        exceptions(query)
+
 ##########################################################################################
 
 
@@ -156,7 +169,7 @@ def addNewLine(str):
 
     if(len(str) > 38):
         chunks = [str[i:i+38] for i in range(0, len(str), 38)]
-        print(chunks)
+        #print(chunks)
         return '\n'.join(chunks)
 
     return str
@@ -167,8 +180,8 @@ def addNewLine(str):
 def getSymbol(str):
     if str == 'rupees':
         return '₹'
-
-    return '$'
+    else:
+        return '$'
 ##########################################################################################
 
 
@@ -178,14 +191,17 @@ def getTotalRevenue(query):
     compNameAndTicker = getCompanyNameAndTicker(query)
     company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
     stock_data = yf.Ticker(ticker)
-    revenue = round(stock_data.info['totalRevenue'], 2)
+    try :
+        revenue = round(stock_data.info['totalRevenue'], 2)
 
-    vocal_results = f"The total revenue of {company_name} is  {n2w(revenue)} dollars"
-    speak(vocal_results)
+        vocal_results = f"The total revenue of {company_name} is  {n2w(revenue)} dollars"
+        speak(vocal_results)
 
-    results = f"The total revenue of {company_name} is  ${revenue}"
-    return results
-
+        results = f"The total revenue of {company_name} is  ${revenue}"
+        return results
+    
+    except :
+        exceptions(query)
 
 ##########################################################################################
 def getMarketCap(query):
@@ -194,13 +210,18 @@ def getMarketCap(query):
     compNameAndTicker = getCompanyNameAndTicker(query)
     company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
     stock_data = yf.Ticker(ticker)
-    revenue = round(stock_data.info['marketCap'], 2)
+    
+    try :
+        marketcap = round(stock_data.info['marketCap'], 2)
 
-    vocal_results = f"The market capitalisation of {company_name} is {n2w(revenue)} {companyData[company_name]['currency']}"
-    speak(vocal_results)
+        vocal_results = f"The market capitalisation of {company_name} is {n2w(marketcap)} {companyData[company_name]['currency']}"
+        speak(vocal_results)
 
-    results = f"The market capitalisation of {company_name} is {getSymbol({companyData[company_name]['currency']})}{n2w(revenue)}"
-    return results
+        results = f"The market capitalisation of {company_name} is {getSymbol({companyData[company_name]['currency']})}{(marketcap)}"
+        return results
+
+    except :
+        exceptions(query)
 ##########################################################################################
 
 
@@ -210,13 +231,19 @@ def get52WeekLow(query):
     compNameAndTicker = getCompanyNameAndTicker(query)
     company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
     stock_data = yf.Ticker(ticker)
-    ftwl = round(stock_data.info['fiftyTwoWeekLow'], 2)
+    
+    try :
+    
+        ftwl = round(stock_data.info['fiftyTwoWeekLow'], 2)
 
-    vocal_results = f"The fifty two week low of {company_name} is {n2w(ftwl)} {getSymbol(companyData[company_name]['currency'])}"
-    speak(vocal_results)
+        vocal_results = f"The fifty two week low of {company_name} is {n2w(ftwl)} {getSymbol(companyData[company_name]['currency'])}"
+        speak(vocal_results)
 
-    results = f"The fifty two week low of {getSymbol(companyData[company_name]['currency'])}{revenue}{company_name}"
-    return results
+        results = f"The fifty two week low of {company_name} is {getSymbol(companyData[company_name]['currency'])}{ftwl}"
+        return results
+        
+    except :
+        exceptions(query)
 ##########################################################################################
 
 
@@ -226,14 +253,18 @@ def get52WeekHigh(query):
     compNameAndTicker = getCompanyNameAndTicker(query)
     company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
     stock_data = yf.Ticker(ticker)
-    ftwh = round(stock_data.info['fiftyTwoWeekHigh'], 2)
+    
+    try :
+        ftwh = round(stock_data.info['fiftyTwoWeekHigh'], 2)
 
-    vocal_results = f"The fifty two week high of {company_name} is  {n2w(ftwh)} {getSymbol(companyData[company_name]['currency'])}"
-    speak(vocal_results)
+        vocal_results = f"The fifty two week high of {company_name} is  {n2w(ftwh)} {getSymbol(companyData[company_name]['currency'])}"
+        speak(vocal_results)
 
-    results = f"The fifty two week high of {getSymbol(companyData[company_name]['currency'])}{ftwh}{company_name}"
-    return results
-
+        results = f"The fifty two week high of {company_name} is {getSymbol(companyData[company_name]['currency'])}{ftwh}"
+        return results
+    
+    except :
+        exceptions(query)
 
 ##########################################################################################
 def getFreeCashFlow(query):
@@ -242,13 +273,18 @@ def getFreeCashFlow(query):
     compNameAndTicker = getCompanyNameAndTicker(query)
     company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
     stock_data = yf.Ticker(ticker)
-    fcf = round(stock_data.info['freeCashflow'], 2)
+    
+    try :
+        fcf = round(stock_data.info['freeCashflow'], 2)
 
-    speak_results = f"The free cash flow of {company_name} is {n2w(fcf)} {companyData[company_name]['currency']}"
-    speak(speak_results)
+        speak_results = f"The free cash flow of {company_name} is {n2w(fcf)} {companyData[company_name]['currency']}"
+        speak(speak_results)
 
-    results = f"The free cash flow of {company_name} is {getSymbol(companyData[company_name]['currency'])}{fcf}"
-    return results
+        results = f"The free cash flow of {company_name} is {getSymbol(companyData[company_name]['currency'])}{fcf}"
+        return results
+    
+    except :
+        exceptions(query)
 ##########################################################################################
 
 
@@ -258,14 +294,18 @@ def getOperatingCashFlow(query):
     compNameAndTicker = getCompanyNameAndTicker(query)
     company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
     stock_data = yf.Ticker(ticker)
-    ocf = round(stock_data.info['operatingCashflow'], 2)
+    
+    try :
+        ocf = round(stock_data.info['operatingCashflow'], 2)
 
-    vocal_results = f"The operating cash flow of {company_name} is {n2w(ocf)} {companyData[company_name]['currency']}"
-    speak(vocal_results)
+        vocal_results = f"The operating cash flow of {company_name} is {n2w(ocf)} {companyData[company_name]['currency']}"
+        speak(vocal_results)
 
-    results = f"The operating cash flow of {company_name} is {getSymbol({companyData[company_name]['currency']})}{ocf}"
-    return results
-
+        results = f"The operating cash flow of {company_name} is {getSymbol({companyData[company_name]['currency']})}{ocf}"
+        return results
+    
+    except :
+        exceptions(query)
 ##########################################################################################
 
 
@@ -275,13 +315,18 @@ def getEps(query):
     compNameAndTicker = getCompanyNameAndTicker(query)
     company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
     stock_data = yf.Ticker(ticker)
-    eps = round(stock_data.info['trailingEps'], 2)
+    
+    try :
+        eps = round(stock_data.info['trailingEps'], 2)
 
-    vocal_results = f"The earnings per share of {company_name} is {n2w(eps)}{companyData[company_name]['currency']}"
-    speak(vocal_results)
+        vocal_results = f"The earnings per share of {company_name} is {n2w(eps)}{companyData[company_name]['currency']}"
+        speak(vocal_results)
 
-    results = f"The earnings per share of {company_name} is {getSymbol(companyData[company_name]['currency'])}{eps}"
-    return results
+        results = f"The earnings per share of {company_name} is {getSymbol(companyData[company_name]['currency'])}{eps}"
+        return results
+    
+    except :
+        exceptions(query)
 ##########################################################################################
 
 
@@ -291,27 +336,30 @@ def getPeRatio(query):
     compNameAndTicker = getCompanyNameAndTicker(query)
     company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
     stock_data = yf.Ticker(ticker)
-    pe_ratio = round(stock_data.info['trailingPE'], 2)
+    
+    try :
+        pe_ratio = round(stock_data.info['trailingPE'], 2)
 
-    vocal_results = f"The price to earnings ratio of {company_name} is {n2w(pe_ratio)}"
-    speak(vocal_results)
+        vocal_results = f"The price to earnings ratio of {company_name} is {n2w(pe_ratio)}"
+        speak(vocal_results)
+        # print(pe_ratio)
+        if pe_ratio < 10:
+            speak("Elvis thinks right now it is not good for investment but still you can keep it on watch")
+        elif 10 <= pe_ratio <= 15:
+            speak("Elvis thinks it can be considered for long term profits, still you can keep it on watch")
+        elif 20 < pe_ratio <= 30:
+            speak("Elvis thinks you can consider to invest")
+        else:
+            speak("Elvis thinks its high right now and should hold")
 
-    # print(pe_ratio)
-    if pe_ratio < 10:
-        speak("Elvis thinks right now it is not good for investment but still you can keep it on watch")
-    elif 10 <= pe_ratio <= 15:
-        speak("Elvis thinks it can be considered for long term profits, still you can keep it on watch")
-    elif 20 < pe_ratio <= 30:
-        speak("Elvis thinks you can consider to invest")
-    else:
-        speak("Elvis thinks its high right now and should hold")
+    # speak(
+    #     "All such information is for assistance only and shall not be taken as the sole basis for making any investment decision.")
 
-   # speak(
-   #     "All such information is for assistance only and shall not be taken as the sole basis for making any investment decision.")
+        results = f"The price to earnings ratio  of {company_name} is {pe_ratio}"
+        return results
 
-    results = f"The price to earnings ratio  of {company_name} is {pe_ratio}"
-    return results
-
+    except: 
+        exceptions(query)
 ##########################################################################################
 
 
@@ -321,14 +369,18 @@ def getEbitda(query):
     compNameAndTicker = getCompanyNameAndTicker(query)
     company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
     stock_data = yf.Ticker(ticker)
-    ebitda = round(stock_data.info['ebitda'], 2)
+    
+    try :
+        ebitda = round(stock_data.info['ebitda'], 2)
 
-    vocal_results = f"The EBITDA of {company_name} is {n2w(ebitda)} {companyData[company_name]['currency']}"
-    speak(vocal_results)
+        vocal_results = f"The EBITDA of {company_name} is {n2w(ebitda)} {companyData[company_name]['currency']}"
+        speak(vocal_results)
 
-    results = f"The EBITDA of {company_name} is {getSymbol(companyData[company_name]['currency'])}{ebitda}"
-    return results
-
+        results = f"The EBITDA of {company_name} is {getSymbol(companyData[company_name]['currency'])}{ebitda}"
+        return results
+    
+    except :
+        exceptions(query)
 ##########################################################################################
 
 
@@ -339,14 +391,17 @@ def getPriceToBook(query):
     company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
     stock_data = yf.Ticker(ticker)
 
-    price_to_book = round(stock_data.info['priceToBook'], 2)
+    try :
+        price_to_book = round(stock_data.info['priceToBook'], 2)
 
-    vocal_results = f"Price to book ratio of {company_name} is {n2w(price_to_book)}"
-    speak(vocal_results)
+        vocal_results = f"Price to book ratio of {company_name} is {n2w(price_to_book)}"
+        speak(vocal_results)
 
-    results = f"Price to book ratio of {n2w(company_name)} is {price_to_book}"
-    return results
-
+        results = f"Price to book ratio of {(company_name)} is {price_to_book}"
+        return results
+    
+    except :
+        exceptions(query)
 ##########################################################################################
 
 
@@ -356,14 +411,18 @@ def getDebtToEquity(query):
     compNameAndTicker = getCompanyNameAndTicker(query)
     company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
     stock_data = yf.Ticker(ticker)
-    d2e = round(stock_data.info['debtToEquity'], 2)
 
-    vocal_results = f"The debt to equity ratio of {company_name} is {n2w(d2e)}"
-    speak(vocal_results)
+    try :
+        d2e = round(stock_data.info['debtToEquity'], 2)
 
-    results = f"The debt to equity ratio of {company_name} is {d2e}"
-    return results
+        vocal_results = f"The debt to equity ratio of {company_name} is {n2w(d2e)}"
+        speak(vocal_results)
 
+        results = f"The debt to equity ratio of {company_name} is {d2e}"
+        return results
+    
+    except :
+        exceptions(query)
 
 ##########################################################################################
 
@@ -373,13 +432,19 @@ def getTargetHighPrice(query):
     compNameAndTicker = getCompanyNameAndTicker(query)
     company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
     stock_data = yf.Ticker(ticker)
-    tp = round(stock_data.info['targetHighPrice'], 2)
+    
+    try :
+        tp = round(stock_data.info['targetHighPrice'], 2)
 
-    vocal_results = f"The target high price of {company_name} is {n2w(tp)} {companyData[company_name]['currency']}"
-    speak(vocal_results)
+        vocal_results = f"The target high price of {company_name} is {n2w(tp)} {companyData[company_name]['currency']}"
+        speak(vocal_results)
 
-    results = f"The target high price of {company_name} is {getSymbol(companyData[company_name]['currency'])}{tp}"
-    return results
+        results = f"The target high price of {company_name} is {getSymbol(companyData[company_name]['currency'])}{tp}"
+        return results
+
+    
+    except :
+        exceptions(query)
 
 ##########################################################################################
 
@@ -407,14 +472,19 @@ def getForwardPe(query):
     compNameAndTicker = getCompanyNameAndTicker(query)
     company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
     stock_data = yf.Ticker(ticker)
-    feps = round(stock_data.info['forwardPE'], 2)
+    
+    try :
+        feps = round(stock_data.info['forwardPE'], 2)
 
-    vocal_results = f"The forward price to earning ratio of {company_name} is {n2w(feps)}"
-    speak(vocal_results)
+        vocal_results = f"The forward price to earning ratio of {company_name} is {n2w(feps)}"
+        speak(vocal_results)
 
-    results = f"The forward price to earning ratio of {company_name} is {feps}"
-    return results
+        results = f"The forward price to earning ratio of {company_name} is {feps}"
+        return results
 
+    
+    except :
+        exceptions(query)
 ##########################################################################################
 
 
@@ -424,14 +494,18 @@ def getFiftyDma(query):
     compNameAndTicker = getCompanyNameAndTicker(query)
     company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
     stock_data = yf.Ticker(ticker)
-    fiftyDma = round(stock_data.info['fiftyDayAverage'], 2)
+    
+    try :
+        fiftyDma = round(stock_data.info['fiftyDayAverage'], 2)
 
-    vocal_results = f"The fifty day moving average of {company_name} is {n2w(fiftyDma)} {companyData[company_name]['currency']}"
-    speak(vocal_results)
+        vocal_results = f"The fifty day moving average of {company_name} is {n2w(fiftyDma)} {companyData[company_name]['currency']}"
+        speak(vocal_results)
 
-    results = f"The fifty day moving average of {company_name} is {getSymbol(companyData[company_name]['currency'])}{fiftyDma}"
-    return results
-
+        results = f"The fifty day moving average of {company_name} is {getSymbol(companyData[company_name]['currency'])}{fiftyDma}"
+        return results
+    
+    except :
+        exceptions(query)
 ##########################################################################################
 
 
@@ -441,14 +515,18 @@ def getPegRatio(query):
     compNameAndTicker = getCompanyNameAndTicker(query)
     company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
     stock_data = yf.Ticker(ticker)
-    peg = round(stock_data.info['trailingPegRatio'], 2)
+    
+    try :
+        peg = round(stock_data.info['trailingPegRatio'], 2)
 
-    vocal_results = f"The price earnings to growth ratio of {company_name} is {n2w(peg)}"
-    speak(vocal_results)
+        vocal_results = f"The price earnings to growth ratio of {company_name} is {n2w(peg)}"
+        speak(vocal_results)
 
-    results = f"The price earnings to growth ratio of {company_name} is {peg}"
-    return results
-
+        results = f"The price earnings to growth ratio of {company_name} is {peg}"
+        return results
+    
+    except :
+        exceptions(query)
 ##########################################################################################
 
 
@@ -458,15 +536,19 @@ def getDividendRate(query):
     compNameAndTicker = getCompanyNameAndTicker(query)
     company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
     stock_data = yf.Ticker(ticker)
-    divRate = round(stock_data.info['dividendRate'], 2)
+    
+    try :
+        divRate = round(stock_data.info['dividendRate'], 2)
 
-    vocal_results = f"The dividend rate of {company_name} is {n2w(divRate)}"
-    speak(vocal_results)
+        vocal_results = f"The dividend rate of {company_name} is {n2w(divRate)}"
+        speak(vocal_results)
 
-    results = f"The dividend rate of {company_name} is {divRate}"
-    return results
+        results = f"The dividend rate of {company_name} is {divRate}"
+        return results
+    
+    except :
+        exceptions(query)
 ##########################################################################################
-
 
 def getLastDividendValue(query):
     global companyData
@@ -474,13 +556,17 @@ def getLastDividendValue(query):
     compNameAndTicker = getCompanyNameAndTicker(query)
     company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
     stock_data = yf.Ticker(ticker)
-    ldiv = round(stock_data.info['lastDividendValue'], 2)
+    
+    try :
+        ldiv = round(stock_data.info['lastDividendValue'], 2)
+        vocal_results = f"The last dividend value of {company_name} is {n2w(ldiv)} {companyData[company_name]['currency']}"
+        speak(vocal_results)
 
-    vocal_results = f"The last dividend value of {company_name} is {n2w(ldiv)} {companyData[company_name]['currency']}"
-    speak(vocal_results)
+        results = f"The last dividend value of {company_name} is {getSymbol(companyData[company_name]['currency'])}{ldiv}"
+        return results
 
-    results = f"The last dividend value of {company_name} is {getSymbol(companyData[company_name]['currency'])}{ldiv}"
-    return results
+    except :
+        exceptions(query)
 
 ##########################################################################################
 
@@ -491,27 +577,35 @@ def get52WeekChange(query):
     compNameAndTicker = getCompanyNameAndTicker(query)
     company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
     stock_data = yf.Ticker(ticker)
-    weekchng = round(stock_data.info['52WeekChange'], 2)
+    try :
+        weekchng = round(stock_data.info['52WeekChange'], 2)
 
-    vocal_results = f"The fifty two week change of {company_name} is {n2w(weekchng)} percent"
-    speak(vocal_results)
+        vocal_results = f"The fifty two week change of {company_name} is {n2w(weekchng)} percent"
+        speak(vocal_results)
 
-    results = f"The fifty two week change of {company_name} is %{weekchng}"
-    return results
+        results = f"The fifty two week change of {company_name} is %{weekchng}"
+        return results
+    
+    except :
+        exceptions(query)
 ##########################################################################################
-
 
 def getPreviousClose(query):
     compNameAndTicker = getCompanyNameAndTicker(query)
     company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
     stock_data = yf.Ticker(ticker)
-    prevclose = round(stock_data.info['previousClose'], 2)
 
-    vocal_results = f"The previous close of {company_name} is {n2w(prevclose)} {companyData[company_name]['currency']}"
-    speak(vocal_results)
+    try :
+        prevclose = round(stock_data.info['previousClose'], 2)
 
-    results = f"The previous close of {company_name} is {getSymbol(companyData[company_name]['currency'])}{prevclose}"
-    return results
+        vocal_results = f"The previous close of {company_name} is {n2w(prevclose)} {companyData[company_name]['currency']}"
+        speak(vocal_results)
+
+        results = f"The previous close of {company_name} is {getSymbol(companyData[company_name]['currency'])}{prevclose}"
+        return results
+    
+    except :
+        exceptions(query)
 ##########################################################################################
 
 
@@ -519,14 +613,18 @@ def getRegularMarketOpen(query):
     compNameAndTicker = getCompanyNameAndTicker(query)
     company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
     stock_data = yf.Ticker(ticker)
-    openprice = round(stock_data.info['regularMarketOpen'], 2)
+    
+    try:
+        openprice = round(stock_data.info['regularMarketOpen'], 2)
 
-    vocal_results = f"The opening price of {company_name}, is {n2w(openprice)} {companyData[company_name]['currency']}"
-    speak(vocal_results)
+        vocal_results = f"The opening price of {company_name}, is {n2w(openprice)} {companyData[company_name]['currency']}"
+        speak(vocal_results)
 
-    results = f"The opening price of {company_name}, is {getSymbol(companyData[company_name]['currency'])}{openprice}"
-    return results
-
+        results = f"The opening price of {company_name}, is {getSymbol(companyData[company_name]['currency'])}{openprice}"
+        return results
+    
+    except :
+        exceptions(query)
 ##########################################################################################
 
 
@@ -534,13 +632,18 @@ def getRegularMarketDayLow(query):
     compNameAndTicker = getCompanyNameAndTicker(query)
     company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
     stock_data = yf.Ticker(ticker)
-    daylow = round(stock_data.info['regularMarketDayLow'], 2)
+    
+    try :
+        daylow = round(stock_data.info['regularMarketDayLow'], 2)
 
-    vocal_results = f"The day low price of {company_name} is {n2w(daylow)} {companyData[company_name]['currency']}"
-    speak(vocal_results)
+        vocal_results = f"The day low price of {company_name} is {n2w(daylow)} {companyData[company_name]['currency']}"
+        speak(vocal_results)
 
-    results = f"The day low price of {company_name} is {daylow}"
-    return results
+        results = f"The day low price of {company_name} is {daylow}"
+        return results
+
+    except :
+        exceptions(query)
 
 ##########################################################################################
 
@@ -549,14 +652,18 @@ def getRegularMarketDayHigh(query):
     compNameAndTicker = getCompanyNameAndTicker(query)
     company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
     stock_data = yf.Ticker(ticker)
-    dayhigh = round(stock_data.info['regularMarketDayHigh'], 2)
+    
+    try :
+        dayhigh = round(stock_data.info['regularMarketDayHigh'], 2)
 
-    vocal_results = f"The day high price of {company_name} is {n2w(dayhigh)} {companyData[company_name]['currency']}"
-    speak(vocal_results)
+        vocal_results = f"The day high price of {company_name} is {n2w(dayhigh)} {companyData[company_name]['currency']}"
+        speak(vocal_results)
 
-    results = f"The day high price of {company_name} is {getSymbol(companyData[company_name]['currency'])}{dayhigh}"
-    return results
-
+        results = f"The day high price of {company_name} is {getSymbol(companyData[company_name]['currency'])}{dayhigh}"
+        return results
+    
+    except :
+        exceptions(query)
 ##########################################################################################
 
 
@@ -564,12 +671,16 @@ def getSector(query):
     compNameAndTicker = getCompanyNameAndTicker(query)
     company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
     stock_data = yf.Ticker(ticker)
-    sec = stock_data.info['sector']
+    
+    try :
+        sec = stock_data.info['sector']
 
-    vocal_results = f"The {company_name} belongs to {sec} sector"
-    speak(vocal_results)
-    return vocal_results
-
+        vocal_results = f"The {company_name} belongs to {sec} sector"
+        speak(vocal_results)
+        return vocal_results
+    
+    except :
+        exceptions(query)
 ##########################################################################################
 
 
