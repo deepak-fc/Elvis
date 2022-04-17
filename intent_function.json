@@ -1,113 +1,273 @@
 {
-	"intent_fun_matching":
-	[
+    "intent_fun_matching": [
         {
             "fun": "getStockPrice",
-            "patterns":["stock price of", "current price of", "last trading price of", "current market price of", "ltp of"]
+            "patterns": [
+                "stock price of",
+                "current price of",
+                "last trading price of",
+                "current market price of",
+                "ltp of"
+            ]
+        },
+        {
+            "fun": "displayFortyFiveDaysCandleSticks",
+            "patterns": [
+                "fourty five days candlesticks chart of",
+                "fourty five days candlestick chart of",
+                "forty five days candlestick chart of",
+                "forty five days candlestick chart of",
+                "45 days candlestick chart of",
+                "45 days candle stick chart of",
+                "forty five days candle sticks chart of",
+                "fourty five days candle sticks chart of"
+            ]
+        },
+        {
+            "fun": "displayFifteenDaysCandleSticks",
+            "patterns": [
+                "fifteen days candlesticks chart of",
+                "fifteen days candlestick chart of",
+                "15 days candlestick chart of",
+                "15 days candle stick chart of",
+                "fifteen days candle sticks chart of"
+            ]
+        },
+        {
+            "fun": "displayFiveDaysCandleSticks",
+            "patterns": [
+                "five days candlesticks chart of",
+                "five days candlestick chart of",
+                "5 days candlestick chart of",
+                "5 days candle stick chart of",
+                "five days candle sticks chart of"
+            ]
+        },
+        
+        {
+            "fun": "displayOneMonthCandleSticks",
+            "patterns": [
+                "one month candlesticks chart of",
+                "one month candlestick chart of",
+                "1 month candlestick chart of",
+                "1 month candle stick chart of",
+                "one month candle sticks chart of"
+            ]
+        },
+        
+        {
+            "fun": "displayThreeMonthCandleSticks",
+            "patterns": [
+                "three months candlesticks chart of",
+                "three months candlestick chart of",
+                "3 months candlestick chart of",
+                "3 months candle stick chart of",
+                "three months candle sticks chart of"
+            ]
         },
         {
             "fun": "getTotalRevenue",
-            "patterns":["revenue of", "total revenue of"]
+            "patterns": [
+                "revenue of",
+                "total revenue of"
+            ]
         },
         {
             "fun": "getMarketCap",
-            "patterns":["market capitalisation of", "market capitalization of", "market cap of", "market capital of"]
+            "patterns": [
+                "market capitalisation of",
+                "market capitalization of",
+                "market cap of",
+                "market capital of"
+            ]
         },
         {
             "fun": "get52WeekLow",
-            "patterns":["52 week low of", "one year low of", "fifty two week of"]
+            "patterns": [
+                "52 week low of",
+                "one year low of",
+                "fifty two week of"
+            ]
         },
         {
             "fun": "get52WeekHigh",
-            "patterns":["52 week high of", "one year high of", "fifty two high of"]
+            "patterns": [
+                "52 week high of",
+                "one year high of",
+                "fifty two high of"
+            ]
         },
         {
             "fun": "getPriceToBook",
-            "patterns":["price to book ratio of", "price to book of"]
+            "patterns": [
+                "price to book ratio of",
+                "price to book of"
+            ]
         },
         {
             "fun": "getFreeCashFlow",
-            "patterns":["free cash flow of", "fcf of"]
+            "patterns": [
+                "free cash flow of",
+                "fcf of"
+            ]
         },
         {
             "fun": "getOperatingCashFlow",
-            "patterns":["operating cash flow of", "ocf of", "cash flow from operating activities of"]
+            "patterns": [
+                "operating cash flow of",
+                "ocf of",
+                "cash flow from operating activities of"
+            ]
         },
         {
             "fun": "getEbitda",
-            "patterns":["ebitda of", "earnings before interest taxes depreciation and amortization of"]
+            "patterns": [
+                "ebitda of",
+                "earnings before interest taxes depreciation and amortization of"
+            ]
         },
         {
             "fun": "getDebtToEquity",
-            "patterns":["debt to equity ratio of", "de ratio of"]
+            "patterns": [
+                "debt to equity ratio of",
+                "de ratio of"
+            ]
         },
         {
             "fun": "getTargetHighPrice",
-            "patterns":["target price of", "target high price of", "target high of"]
+            "patterns": [
+                "target price of",
+                "target high price of",
+                "target high of"
+            ]
         },
         {
             "fun": "getForwardEps",
-            "patterns":["forward earnings per share of", "forward eps of"]
+            "patterns": [
+                "forward earnings per share of",
+                "forward eps of"
+            ]
         },
         {
             "fun": "getForwardPe",
-            "patterns":["forward price to earnings ratio of", "forward p e ratio of", "forward pe ratio of", "forward pe of", "forward price earnings ratio","forward price to earnings of", "forward price earnings of"]
+            "patterns": [
+                "forward price to earnings ratio of",
+                "forward p e ratio of",
+                "forward pe ratio of",
+                "forward pe of",
+                "forward price earnings ratio",
+                "forward price to earnings of",
+                "forward price earnings of"
+            ]
         },
         {
             "fun": "getFiftyDma",
-            "patterns":["50 day moving average of","fifty day moving average of", "fifty day average of", "fifty dma of", "50 dma of"]
+            "patterns": [
+                "50 day moving average of",
+                "fifty day moving average of",
+                "fifty day average of",
+                "fifty dma of",
+                "50 dma of"
+            ]
         },
         {
             "fun": "getPegRatio",
-            "patterns":["price earning to growth ratio of", "peg ratio of"]
+            "patterns": [
+                "price earning to growth ratio of",
+                "peg ratio of"
+            ]
         },
         {
             "fun": "getEps",
-            "patterns":["earnings per share of", "eps of"]
+            "patterns": [
+                "earnings per share of",
+                "eps of"
+            ]
         },
         {
             "fun": "getPeRatio",
-            "patterns":["price to earnings ratio of", "p e ratio of", "pe ratio of", "pe of", "price earnings ratio","price to earnings of", "price earnings of"]
+            "patterns": [
+                "price to earnings ratio of",
+                "p e ratio of",
+                "pe ratio of",
+                "pe of",
+                "price earnings ratio",
+                "price to earnings of",
+                "price earnings of"
+            ]
         },
         {
             "fun": "getDividendRate",
-            "patterns":["dividend rate of", "current dividend rate of"]
+            "patterns": [
+                "dividend rate of",
+                "current dividend rate of"
+            ]
         },
         {
             "fun": "getLastDividendValue",
-            "patterns":["last dividend value of", "previous dividend value of"]
+            "patterns": [
+                "last dividend value of",
+                "previous dividend value of"
+            ]
         },
         {
             "fun": "get52WeekChange",
-            "patterns":["52 week change of", "fifty two week change of"]
+            "patterns": [
+                "52 week change of",
+                "fifty two week change of"
+            ]
         },
         {
             "fun": "getPreviousClose",
-            "patterns":["previous close of", "previous day close of"]
+            "patterns": [
+                "previous close of",
+                "previous day close of"
+            ]
         },
         {
             "fun": "getRegularMarketOpen",
-            "patterns":["opening price of", "market opening price of", "todays opening price of"]
+            "patterns": [
+                "opening price of",
+                "market opening price of",
+                "todays opening price of"
+            ]
         },
         {
             "fun": "getRegularMarketDayLow",
-            "patterns":["day low price of", "today's day low price of"]
+            "patterns": [
+                "day low price of",
+                "today's day low price of"
+            ]
         },
         {
             "fun": "getRegularMarketDayHigh",
-            "patterns":["day high price of", "today's day high price of"]
+            "patterns": [
+                "day high price of",
+                "today's day high price of"
+            ]
         },
         {
             "fun": "getSector",
-            "patterns":["sector of", "sector"]
+            "patterns": [
+                "sector of",
+                "sector"
+            ]
         },
         {
             "fun": "googleSearch",
-            "patterns":["search for", "please search for", "search on", "search about"]
+            "patterns": [
+                "search for",
+                "please search for",
+                "search on",
+                "search about"
+            ]
         },
         {
             "fun": "youtube",
-            "patterns":["play on youtube", "search on youtube" ]
+            "patterns": [
+                "play on youtube",
+                "search on youtube"
+            ]
         }
-	]
+    ]
 }

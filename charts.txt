@@ -1,0 +1,6 @@
+charts 
+
+
+1) candle sticks: 5d, 15d, 1m, 3m
+
+2) line: (to add)

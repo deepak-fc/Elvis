@@ -7,12 +7,19 @@
 
         Button:
             size_hint: (0.2, 0.4) # (width_proportion, heigth_proportion)
-            pos_hint:{"x":0.4, "top":0.69}
-            background_normal: 'micro2.jpg'
+            pos_hint:{"x":0, "top":0.69}
+            background_normal: 'images/micro2.jpg'
             color:(1, 1, 1, 1)
             on_press: root.runElvis()
             
-          
+        Image:
+            id: img 
+            source: ''
+            opacity: 0
+            size_hint: (0.95, 0.75)
+            pos_hint:{"x":0, "top":0.89}
+            
+
         Label:
             id: output_screen
             text: "" 
@@ -23,6 +30,7 @@
             font_size: 22
             padding: (20,20)
             spacing: (20,0)
+
 
 
 

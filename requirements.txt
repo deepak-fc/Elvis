@@ -7,3 +7,4 @@ yfinance
 num2words
 pipwin
 kivy
+mplfinance
