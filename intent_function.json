@@ -1,6 +1,31 @@
 {
     "intent_fun_matching": [
         {
+            "fun": "addStockToWatchlist",
+            "patterns": [
+                "to watchlist",
+                "to watch list"
+            ]
+        },
+        {
+            "fun": "removeAllStocksFromWatchlist",
+            "patterns": [
+                "remove all stocks from watchlist",
+                "clear watchlist",
+                "delete all from watchlist",
+                "clear all from watchlist",
+                "remove everything from watchlist",
+                "reset watchlist"
+            ]
+        },
+        {
+            "fun": "removeStockFromWatchlist",
+            "patterns": [
+                "from watchlist",
+                "from watch list"
+            ]
+        },
+        {
             "fun": "getStockPrice",
             "patterns": [
                 "stock price of",
@@ -43,7 +68,6 @@
                 "five days candle sticks chart of"
             ]
         },
-        
         {
             "fun": "displayOneMonthCandleSticks",
             "patterns": [
@@ -54,7 +78,6 @@
                 "one month candle sticks chart of"
             ]
         },
-        
         {
             "fun": "displayThreeMonthCandleSticks",
             "patterns": [
