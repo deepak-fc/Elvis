@@ -34,7 +34,6 @@ class MainWidget(Widget):
         toDisplay = processCommand(userVoiceCommand)
 
         try:
-
             if toDisplay.endswith('.png'):
                 self.ids.img.source = toDisplay
                 self.ids.img.opacity = 1
@@ -119,7 +118,7 @@ def addStockToWatchlist(query):
 
     companyNameAndTicker = getCompanyNameAndTicker(query)
     if companyNameAndTicker is not None:
-        sql = f''' INSERT INTO watchlist(stock_name, stock_ticker, current_price)
+        sql = ''' INSERT INTO watchlist(stock_name, stock_ticker, current_price)
                       VALUES(?, ?, ?); '''
         data_tuple = (companyNameAndTicker[0], companyNameAndTicker[1], 0)
         if conn is not None:
@@ -136,6 +135,7 @@ def addStockToWatchlist(query):
 ##########################################################################################
 def removeStockFromWatchlist(query):
     global conn
+
     companyNameAndTicker = getCompanyNameAndTicker(query)
     if companyNameAndTicker is not None:
         sql = """DELETE from watchlist where id = (SELECT id FROM watchlist WHERE stock_name = ?);"""
@@ -218,7 +218,6 @@ def getCompanyNameAndTicker(query):
     global companyData
 
     company_name = ""
-    ticker = ""
 
     if "of" in query:
         start_index = query.split().index('of')
