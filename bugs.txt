@@ -1,6 +1,5 @@
 - Bugs
 
-
 - To dos
     - Add exception for query.split().index('add') and all other. says 'add' not found in sentence.
-    - Add updateTable function which runs continuosly in the background that inserts all current price of stocks in watchlist
+    - Add updateTable function which runs continuosly in the background that inserts all current price of stocks in watchlist.
