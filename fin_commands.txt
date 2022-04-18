@@ -23,3 +23,11 @@
 23) get regular market day low price of
 24) get regular market day high price of
 25) get sector of
+26) five days candlesticks chart of
+27) one month candlesticks chart of
+28) three months candlesticks chart of
+29) forty five days candlestick chart of
+30) fifteen days candlesticks chart of
+31) add (stock name) to watchlist
+32) remove (stock name) from watchlist
+33) remove all stocks from watchlist
