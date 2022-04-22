@@ -23,6 +23,8 @@ voiceEngine = None
 companyData = None
 intentsData = None
 conn = None
+
+
 ##########################################################################################
 class MainWidget(Widget):
     def runElvis(self):
@@ -48,11 +50,15 @@ class MainWidget(Widget):
         if conn:
             print("Closing elvis_db connection...")
             conn.close()
+
+
 ##########################################################################################
 class ElvisApplication(App):
     def build(self):
         Window.clearcolor = (1, 1, 1, 1)
         return MainWidget()
+
+
 ##########################################################################################
 def programInit():
     global voiceEngine
@@ -68,6 +74,8 @@ def programInit():
 
     connectToDatabase()
     createInitialTables()
+
+
 ##########################################################################################
 def connectToDatabase():
     global conn
@@ -76,23 +84,22 @@ def connectToDatabase():
         print("Connected to elvis db...")
     except Error as e:
         print(e)
+
+
 ##########################################################################################
 def createInitialTables():
     global conn
     sql_create_watchlist_table = """ CREATE TABLE IF NOT EXISTS watchlist (
                                             id INTEGER PRIMARY KEY,
                                             stock_name TEXT NOT NULL UNIQUE,
-                                            stock_ticker TEXT NOT NULL UNIQUE,
-                                            current_price FLOAT
+                                            stock_ticker TEXT NOT NULL UNIQUE
                                         ); """
 
     sql_create_portfolio_table = """ CREATE TABLE IF NOT EXISTS portfolio (
                                                 id INTEGER PRIMARY KEY,
                                                 stock_name TEXT NOT NULL UNIQUE,
                                                 stock_ticker TEXT NOT NULL UNIQUE,
-                                                number_of_shares FLOAT,
-                                                per_stock_price FLOAT,
-                                                total_worth FLOAT
+                                                number_of_shares FLOAT
                                             ); """
 
     if conn is not None:
@@ -112,26 +119,30 @@ def createInitialTables():
             print(e)
     else:
         print("Error! cannot create the database connection.")
+
+
 ##########################################################################################################################
 def addStockToWatchlist(query):
     global conn
 
     companyNameAndTicker = getCompanyNameAndTicker(query)
     if companyNameAndTicker is not None:
-        sql = ''' INSERT INTO watchlist(stock_name, stock_ticker, current_price)
-                      VALUES(?, ?, ?); '''
-        data_tuple = (companyNameAndTicker[0], companyNameAndTicker[1], 0)
+        sql = '''INSERT INTO watchlist(stock_name, stock_ticker)
+                      VALUES(?, ?);'''
+        data_tuple = (companyNameAndTicker[0], companyNameAndTicker[1])
         if conn is not None:
             try:
                 cur = conn.cursor()
                 cur.execute(sql, data_tuple)
                 conn.commit()
             except Error as e:
-                print("Already exists in watchlist.")
+                print("Cannot insert into table. Failed.")
         else:
             print("Error! cannot create the database connection.")
     else:
         print("Could not fetch company name from list.")
+
+
 ##########################################################################################
 def removeStockFromWatchlist(query):
     global conn
@@ -150,6 +161,8 @@ def removeStockFromWatchlist(query):
             print("Error! cannot create the database connection.")
     else:
         print("Could not fetch company name from list.")
+
+
 ##########################################################################################
 def removeAllStocksFromWatchlist():
     global conn
@@ -163,7 +176,57 @@ def removeAllStocksFromWatchlist():
             print(e)
     else:
         print("Error! cannot create the database connection.")
+
+
 ##########################################################################################
+def getWatchlistFromDatabase():
+    global conn
+    rows = None
+    sql = """SELECT * FROM watchlist;"""
+    if conn is not None:
+        try:
+            cur = conn.cursor()
+            cur.execute(sql)
+            rows = cur.fetchall()
+        except Error as e:
+            print(e)
+    else:
+        print("Error! cannot create the database connection.")
+
+    return rows
+
+
+##########################################################################################
+def addNumberOfSharesToPortfolio(query):
+    numberOfShares = [int(i) for i in query.split() if i.isdigit()]
+    if len(numberOfShares) == 1:
+        companyNameAndTicker = getCompanyNameAndTicker(query)
+        # if companyNameAndTicker:
+
+        # work here
+        #     sql = ''' INSERT INTO watchlist(stock_name, stock_ticker, current_price)
+        #                   VALUES(?, ?, ?); '''
+        #     data_tuple = (companyNameAndTicker[0], companyNameAndTicker[1], 0)
+        #     if conn is not None:
+        #         try:
+        #             cur = conn.cursor()
+        #             cur.execute(sql, data_tuple)
+        #             conn.commit()
+        #         except Error as e:
+        #             print("Already exists in watchlist.")
+        #     else:
+        #         print("Error! cannot create the database connection.")
+        # else:
+        #     print("Could not fetch company name from list.")
+
+    else:
+        print("Multiple numbers found in query. Failed to update portfolio.")
+        return
+
+
+##########################################################################################
+
+
 def getUserVoiceCommand():
     recognizer = sr.Recognizer()
     mic = sr.Microphone()
@@ -187,6 +250,8 @@ def getUserVoiceCommand():
         return None
 
     return query.lower().strip()
+
+
 ##########################################################################################
 def determineIntent(query):
     global intentsData
@@ -195,6 +260,8 @@ def determineIntent(query):
         for pattern in intentsData['intent_fun_matching'][i]['patterns']:
             if pattern in query:
                 return intentsData['intent_fun_matching'][i]['fun']
+
+
 ##########################################################################################
 def greet():
     currentHourOfTheDay = int(datetime.now().hour)
@@ -207,12 +274,16 @@ def greet():
         speak("Good Evening!")
 
     speak("Hi I am Elvis, How may I help you?")
+
+
 ##########################################################################################
 def speak(text):
     global voiceEngine
 
     voiceEngine.say(text)
     voiceEngine.runAndWait()
+
+
 ##########################################################################################
 def getCompanyNameAndTicker(query):
     global companyData
@@ -240,6 +311,8 @@ def getCompanyNameAndTicker(query):
         print(e)
         # results = f"It seems you have said an invalid company name, please say a valid name and try again"
         # speak(results)
+
+
 ##########################################################################################
 def exceptions(query):
     vocal_results = f"Sorry, the data is not available"
@@ -247,6 +320,8 @@ def exceptions(query):
 
     results = f"Sorry, the data is not available"
     return results
+
+
 ##########################################################################################
 def getStockPrice(query):
     global companyData
@@ -266,6 +341,8 @@ def getStockPrice(query):
 
     except:
         exceptions(query)
+
+
 ##########################################################################################
 def addNewLine(str):
     if (len(str) > 38):
@@ -274,12 +351,16 @@ def addNewLine(str):
         return '\n'.join(chunks)
 
     return str
+
+
 ##########################################################################################
 def getSymbol(str):
     if str == 'rupees':
         return '₹'
 
     return '$'
+
+
 ##########################################################################################
 def getTotalRevenue(query):
     global companyData
@@ -298,6 +379,8 @@ def getTotalRevenue(query):
 
     except:
         exceptions(query)
+
+
 ##########################################################################################
 def getMarketCap(query):
     global companyData
@@ -317,6 +400,8 @@ def getMarketCap(query):
 
     except:
         exceptions(query)
+
+
 ##########################################################################################
 def get52WeekLow(query):
     global companyData
@@ -337,6 +422,8 @@ def get52WeekLow(query):
 
     except:
         exceptions(query)
+
+
 ##########################################################################################
 def get52WeekHigh(query):
     global companyData
@@ -356,6 +443,8 @@ def get52WeekHigh(query):
 
     except:
         exceptions(query)
+
+
 ##########################################################################################
 def getFreeCashFlow(query):
     global companyData
@@ -375,6 +464,8 @@ def getFreeCashFlow(query):
 
     except:
         exceptions(query)
+
+
 ##########################################################################################
 def getOperatingCashFlow(query):
     global companyData
@@ -394,6 +485,8 @@ def getOperatingCashFlow(query):
 
     except:
         exceptions(query)
+
+
 ##########################################################################################
 def getEps(query):
     global companyData
@@ -413,6 +506,8 @@ def getEps(query):
 
     except:
         exceptions(query)
+
+
 ##########################################################################################
 def getPeRatio(query):
     global companyData
@@ -446,6 +541,8 @@ def getPeRatio(query):
 
     except:
         exceptions(query)
+
+
 ##########################################################################################
 def getEbitda(query):
     global companyData
@@ -465,6 +562,8 @@ def getEbitda(query):
 
     except:
         exceptions(query)
+
+
 ##########################################################################################
 def getPriceToBook(query):
     global companyData
@@ -484,6 +583,8 @@ def getPriceToBook(query):
 
     except:
         exceptions(query)
+
+
 ##########################################################################################
 def getDebtToEquity(query):
     global companyData
@@ -503,6 +604,8 @@ def getDebtToEquity(query):
 
     except:
         exceptions(query)
+
+
 ##########################################################################################
 def getTargetHighPrice(query):
     global companyData
@@ -522,6 +625,8 @@ def getTargetHighPrice(query):
 
     except:
         exceptions(query)
+
+
 ##########################################################################################
 def getForwardEps(query):
     global companyData
@@ -536,6 +641,8 @@ def getForwardEps(query):
 
     results = f"The forward earnings per share of {company_name} is {getSymbol(companyData[company_name]['currency'])}{feps}"
     return results
+
+
 ##########################################################################################
 def getForwardPe(query):
     global companyData
@@ -555,6 +662,8 @@ def getForwardPe(query):
 
     except:
         exceptions(query)
+
+
 ##########################################################################################
 def getFiftyDma(query):
     global companyData
@@ -574,6 +683,8 @@ def getFiftyDma(query):
 
     except:
         exceptions(query)
+
+
 ##########################################################################################
 def getPegRatio(query):
     global companyData
@@ -593,6 +704,8 @@ def getPegRatio(query):
 
     except:
         exceptions(query)
+
+
 ##########################################################################################
 def getDividendRate(query):
     global companyData
@@ -612,6 +725,8 @@ def getDividendRate(query):
 
     except:
         exceptions(query)
+
+
 ##########################################################################################
 def getLastDividendValue(query):
     global companyData
@@ -630,6 +745,8 @@ def getLastDividendValue(query):
 
     except:
         exceptions(query)
+
+
 ##########################################################################################
 def get52WeekChange(query):
     global companyData
@@ -648,6 +765,8 @@ def get52WeekChange(query):
 
     except:
         exceptions(query)
+
+
 ##########################################################################################
 def getPreviousClose(query):
     compNameAndTicker = getCompanyNameAndTicker(query)
@@ -665,6 +784,8 @@ def getPreviousClose(query):
 
     except:
         exceptions(query)
+
+
 ##########################################################################################
 def getRegularMarketOpen(query):
     compNameAndTicker = getCompanyNameAndTicker(query)
@@ -682,6 +803,8 @@ def getRegularMarketOpen(query):
 
     except:
         exceptions(query)
+
+
 ##########################################################################################
 def getRegularMarketDayLow(query):
     compNameAndTicker = getCompanyNameAndTicker(query)
@@ -699,6 +822,8 @@ def getRegularMarketDayLow(query):
 
     except:
         exceptions(query)
+
+
 ##########################################################################################
 def getRegularMarketDayHigh(query):
     compNameAndTicker = getCompanyNameAndTicker(query)
@@ -716,6 +841,8 @@ def getRegularMarketDayHigh(query):
 
     except:
         exceptions(query)
+
+
 ##########################################################################################
 def getSector(query):
     compNameAndTicker = getCompanyNameAndTicker(query)
@@ -731,6 +858,8 @@ def getSector(query):
 
     except:
         exceptions(query)
+
+
 ##########################################################################################
 def displayFiveDaysCandleSticks(query):
     global companyData
@@ -752,6 +881,8 @@ def displayFiveDaysCandleSticks(query):
     speak(f"here is the five days candle stick chart of {company_name}")
 
     return file
+
+
 ##########################################################################################
 def displayFifteenDaysCandleSticks(query):
     global companyData
@@ -771,6 +902,8 @@ def displayFifteenDaysCandleSticks(query):
     speak(f"here is the fifteen days candle stick chart of {company_name}")
 
     return file
+
+
 ##########################################################################################################################
 def displayOneMonthCandleSticks(query):
     global companyData
@@ -791,6 +924,8 @@ def displayOneMonthCandleSticks(query):
     speak(f"here is the one month candle stick chart of {company_name}")
 
     return file
+
+
 ##########################################################################################################################
 def displayFortyFiveDaysCandleSticks(query):
     global companyData
@@ -809,6 +944,8 @@ def displayFortyFiveDaysCandleSticks(query):
     speak(f"here is the forty five days candle stick chart of {company_name}")
 
     return file
+
+
 ##########################################################################################################################
 def displayThreeMonthCandleSticks(query):
     global companyData
@@ -827,18 +964,24 @@ def displayThreeMonthCandleSticks(query):
 
     speak(f"here is the three months candle stick chart of {company_name}")
     return file
+
+
 ##########################################################################################################################
 def googleSearch(query):
     search_term = query.split("for")[-1]
     url = f"https://google.com/search?q={search_term}"
     webbrowser.get().open(url)
     speak(f'Here is what I found for {search_term} on google')
+
+
 ##########################################################################################################################
 def youtube(query):
     search_term = query.split("youtube")[-1]
     url = f"https://youtube.com/search?q={search_term}"
     webbrowser.get().open(url)
     speak(f'Here is what I found for {search_term} on youtube')
+
+
 ##########################################################################################
 def processCommand(query):
     if query is None:
@@ -966,6 +1109,8 @@ def processCommand(query):
     elif "what is the time" in query:
         strTime = datetime.now().strftime("%H:%M:%S")
         speak(f"The current time is {strTime}")
+
+
 ##########################################################################################
 if __name__ == '__main__':
     ElvisApplication().run()
