@@ -11,6 +11,7 @@
     "Amd":{"company_ticker":"AMD","currency":"dollars"},
     "Rolls-Royce":{"company_ticker":"RYCEY","currency":"dollars"},
 
+    
     "Larsen And Toubro":{"company_ticker":"LT.NS","currency":"rupees"},
     "Infosys":{"company_ticker":"INFY.NS","currency":"rupees"},
     "Tcs":{"company_ticker":"TCS.NS","currency":"rupees"},
@@ -62,5 +63,37 @@
     "Irctc":{"company_ticker":"IRCTC.NS","currency":"rupees"},
     "Punjab National Bank":{"company_ticker":"PNB.NS","currency":"rupees"},
     "Symphony":{"company_ticker":"SYMPHONY.NS","currency":"rupees"},
-    "Reliance":{"company_ticker":"RELIANCE.NS","currency":"rupees"}
+    "Reliance":{"company_ticker":"RELIANCE.NS","currency":"rupees"},
+
+
+    "Bitcoin":{"company_ticker":"BTC-USD","currency":"dollars"},
+    "Ethereum":{"company_ticker":"ETH-USD","currency":"dollars"},
+    "Tether":{"company_ticker":"USDT-USD","currency":"dollars"},
+    "Binance Coin":{"company_ticker":"BNB-USD","currency":"dollars"},
+    "Usd Coin":{"company_ticker":"USDC-USD","currency":"dollars"},
+    "Xrp":{"company_ticker":"XRP-USD","currency":"dollars"},
+    "Solana":{"company_ticker":"SOL-USD","currency":"dollars"},
+    "Terra":{"company_ticker":"LUNA1-USD","currency":"dollars"},
+    "Cardano":{"company_ticker":"ADA-USD","currency":"dollars"},
+    "Hex":{"company_ticker":"HEX-USD","currency":"dollars"},
+    "Avalanche":{"company_ticker":"AVAX-USD","currency":"dollars"},
+    "Polkadot":{"company_ticker":"DOT-USD","currency":"dollars"},
+    "Terrausd":{"company_ticker":"UST-USD","currency":"dollars"},
+    "Dogecoin":{"company_ticker":"DOGE-USD","currency":"dollars"},
+    "Binance Usd":{"company_ticker":"BUSD-USD","currency":"dollars"},
+    "Shiba Inu":{"company_ticker":"Shib-USD","currency":"dollars"},
+    "Wrapped Bitcoin":{"company_ticker":"WBTC-USD","currency":"dollars"},
+    "Polygon":{"company_ticker":"MATIC-USD","currency":"dollars"},
+    "Theta":{"company_ticker":"THETHA-USD","currency":"dollars"},
+    "Fantom":{"company_ticker":"FTM-USD","currency":"dollars"},
+    "Filecoin":{"company_ticker":"FIL-USD","currency":"dollars"},
+    "Sandbox":{"company_ticker":"SAND-USD","currency":"dollars"},
+    "Stellar":{"company_ticker":"XLM-USD","currency":"dollars"},
+
+
+    "Dow Jones":{"company_ticker":"^DJI","currency":"dollars"},
+    "Nasdaq":{"company_ticker":"^IXIC","currency":"dollars"},
+    "Newyork Stock Exchange":{"company_ticker":"^NYA","currency":"dollars"},
+    "Nifty 50":{"company_ticker":"^NSEI","currency":"dollars"},
+    "Bank Nifty":{"company_ticker":"^NSEBANK","currency":"dollars"}
 }

@@ -298,6 +298,13 @@
             ]
         },
         {
+            "fun": "getRegularMarketPrice",
+            "patterns": [
+                "market price of",
+                "regular market price of"
+            ]
+        },
+        {
             "fun": "getRegularMarketDayLow",
             "patterns": [
                 "day low price of",
