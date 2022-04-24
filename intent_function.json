@@ -88,6 +88,48 @@
                 "three months candle sticks chart of"
             ]
         },
+         {
+            "fun": "displayOneMonthLine",
+            "patterns": [
+                "one month line chart of",
+                "1 month line chart of"
+            ]
+        },
+        {
+            "fun": "displayThreeMonthsLine",
+            "patterns": [
+                "three months line chart of",
+                "3 months line chart of"
+            ]
+        },
+        {
+            "fun": "displaySixMonthsLine",
+            "patterns": [
+                "six months line chart of",
+                "6 months line chart of"
+            ]
+        },
+        {
+            "fun": "displayOneYearLine",
+            "patterns": [
+                "one year line chart of",
+                "1 year line chart of"
+            ]
+        },
+        {
+            "fun": "displayFiveYearsLine",
+            "patterns": [
+                "five years line chart of",
+                "5 year line chart of"
+            ]
+        },
+        {
+            "fun": "displayMaxLine",
+            "patterns": [
+                "max line chart of",
+                "maximum line chart of"
+            ]
+        },
         {
             "fun": "getTotalRevenue",
             "patterns": [

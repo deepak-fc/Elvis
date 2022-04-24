@@ -37,6 +37,7 @@ class MainWidget(Widget):
 
         try:
             if toDisplay.endswith('.png'):
+                self.ids.output_screen.text = ''
                 self.ids.img.source = toDisplay
                 self.ids.img.opacity = 1
 
@@ -71,6 +72,10 @@ def programInit():
 
     with open('intent_function.json') as d:
         intentsData = json.load(d)
+
+    dir = 'images'
+    for f in os.listdir(dir):
+        os.remove(os.path.join(dir, f))
 
     connectToDatabase()
     createInitialTables()
@@ -866,17 +871,18 @@ def displayFiveDaysCandleSticks(query):
 
     compNameAndTicker = getCompanyNameAndTicker(query)
     company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
-    # print(ticker)
     comp = yf.Ticker(ticker)
     history = comp.history(period='5d', actions=False)
 
-    file = 'images/' + company_name.lower() + '.png'
+    file = 'images/' + company_name.lower() + '5d.png'
+    symbol = getSymbol(companyData[company_name]['currency'])
+    title = f'5 days candlesticks chart of {company_name} (Price in {symbol})'
 
     if os.path.exists(file):
         os.remove(file)
 
     mpf.plot(history, type='candle', style='yahoo',
-             volume=True, savefig=file)
+             volume=True, title=title, savefig=file)
 
     speak(f"here is the five days candle stick chart of {company_name}")
 
@@ -892,12 +898,14 @@ def displayFifteenDaysCandleSticks(query):
     comp = yf.Ticker(ticker)
     history = comp.history(period='15d', actions=False)
 
-    file = 'images/' + company_name.lower() + '.png'
+    file = 'images/' + company_name.lower() + '15d.png'
+    symbol = getSymbol(companyData[company_name]['currency'])
+    title = f'15 days candlesticks chart of {company_name} (Price in {symbol})'
 
     if os.path.exists(file):
         os.remove(file)
     mpf.plot(history, type='candle', style='yahoo',
-             volume=True, savefig=file)
+             volume=True, title=title, savefig=file)
 
     speak(f"here is the fifteen days candle stick chart of {company_name}")
 
@@ -913,13 +921,15 @@ def displayOneMonthCandleSticks(query):
     comp = yf.Ticker(ticker)
     history = comp.history(period='30d', actions=False)
 
-    file = 'images/' + company_name.lower() + '.png'
+    file = 'images/' + company_name.lower() + '1m.png'
+    symbol = getSymbol(companyData[company_name]['currency'])
+    title = f'1 month candlesticks chart of {company_name} (Price in {symbol})'
 
     if os.path.exists(file):
         os.remove(file)
 
     mpf.plot(history, type='candle', style='yahoo',
-             volume=True, savefig=file)
+             volume=True, title=title, savefig=file)
 
     speak(f"here is the one month candle stick chart of {company_name}")
 
@@ -935,12 +945,15 @@ def displayFortyFiveDaysCandleSticks(query):
     comp = yf.Ticker(ticker)
     history = comp.history(period='45d', actions=False)
 
-    file = 'images/' + company_name.lower() + '.png'
+    file = 'images/' + company_name.lower() + '45d.png'
+    symbol = getSymbol(companyData[company_name]['currency'])
+    title = f'45 days candlesticks chart of {company_name} (Price in {symbol})'
 
     if os.path.exists(file):
         os.remove(file)
 
-    mpf.plot(history, type='candle', style='yahoo', volume=True, savefig=file)
+    mpf.plot(history, type='candle', style='yahoo',
+             title=title,  volume=True, savefig=file)
     speak(f"here is the forty five days candle stick chart of {company_name}")
 
     return file
@@ -955,18 +968,160 @@ def displayThreeMonthCandleSticks(query):
     comp = yf.Ticker(ticker)
     history = comp.history(period='90d', actions=False)
 
-    file = 'images/' + company_name.lower() + '.png'
+    file = 'images/' + company_name.lower() + '3m.png'
+    symbol = getSymbol(companyData[company_name]['currency'])
+    title = f'3 months candlesticks chart of {company_name} (Price in {symbol})'
 
     if os.path.exists(file):
         os.remove(file)
 
-    mpf.plot(history, type='candle', style='yahoo', volume=True, savefig=file)
+    mpf.plot(history, type='candle', style='yahoo',
+             volume=True,  title=title,  savefig=file)
 
     speak(f"here is the three months candle stick chart of {company_name}")
     return file
 
 
 ##########################################################################################################################
+def displayOneMonthLine(query):
+    global companyData
+
+    compNameAndTicker = getCompanyNameAndTicker(query)
+    company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
+    # print(ticker)
+    comp = yf.Ticker(ticker)
+    history = comp.history(period='30d', actions=False)
+
+    file = 'images/' + company_name.lower() + '1m.png'
+    symbol = getSymbol(companyData[company_name]['currency'])
+    title = f'1 month line chart of {company_name} (Price in {symbol})'
+
+    mpf.plot(history, type='line', style='yahoo',
+             title=title, volume=True, savefig=file)
+
+    speak(f"here is the 1 month line chart of {company_name}")
+
+    return file
+
+##########################################################################################################################
+
+
+# 5 days candle stick
+def displayThreeMonthsLine(query):
+    global companyData
+
+    compNameAndTicker = getCompanyNameAndTicker(query)
+    company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
+    # print(ticker)
+    comp = yf.Ticker(ticker)
+    history = comp.history(period='90d', actions=False)
+
+    file = 'images/' + company_name.lower() + '3m.png'
+    symbol = getSymbol(companyData[company_name]['currency'])
+    title = f'3 months line chart of {company_name} (Price in {symbol})'
+
+    mpf.plot(history, type='line', style='yahoo',
+             title=title, volume=True, savefig=file)
+
+    speak(f"here is the 3 months line chart of {company_name}")
+
+    return file
+
+##########################################################################################################################
+
+
+def displaySixMonthsLine(query):
+    global companyData
+
+    compNameAndTicker = getCompanyNameAndTicker(query)
+    company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
+    # print(ticker)
+    comp = yf.Ticker(ticker)
+    history = comp.history(period='180d', actions=False)
+
+    file = 'images/' + company_name.lower() + '6m.png'
+    symbol = getSymbol(companyData[company_name]['currency'])
+    title = f'6 months line chart of {company_name} (Price in {symbol})'
+
+    mpf.plot(history, type='line', style='yahoo',
+             title=title, volume=True, savefig=file)
+
+    speak(f"here is the 6 months line chart of {company_name}")
+
+    return file
+
+##########################################################################################################################
+
+
+def displayOneYearLine(query):
+    global companyData
+
+    compNameAndTicker = getCompanyNameAndTicker(query)
+    company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
+    # print(ticker)
+    comp = yf.Ticker(ticker)
+    history = comp.history(period='1y', actions=False)
+
+    file = 'images/' + company_name.lower() + '1y.png'
+    symbol = getSymbol(companyData[company_name]['currency'])
+    title = f'1 year line chart of {company_name} (Price in {symbol})'
+
+    mpf.plot(history, type='line', style='yahoo',
+             title=title, volume=True, savefig=file)
+
+    speak(f"here is the 1 year line chart of {company_name}")
+
+    return file
+
+##########################################################################################################################
+
+
+def displayFiveYearsLine(query):
+    global companyData
+
+    compNameAndTicker = getCompanyNameAndTicker(query)
+    company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
+    # print(ticker)
+    comp = yf.Ticker(ticker)
+    history = comp.history(period='5y', actions=False)
+
+    file = 'images/' + company_name.lower() + '5y.png'
+    symbol = getSymbol(companyData[company_name]['currency'])
+    title = f'5 years line chart of {company_name} (Price in {symbol})'
+
+    speak(f"here is the 5 years line chart of {company_name}")
+
+    mpf.plot(history, type='line', style='yahoo',
+             title=title, volume=True, savefig=file)
+
+    return file
+
+##########################################################################################################################
+
+
+def displayMaxLine(query):
+    global companyData
+
+    compNameAndTicker = getCompanyNameAndTicker(query)
+    company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
+    # print(ticker)
+    comp = yf.Ticker(ticker)
+    history = comp.history(period='max', actions=False)
+
+    file = 'images/' + company_name.lower() + 'max.png'
+    symbol = getSymbol(companyData[company_name]['currency'])
+    title = f'Maximum time frame line chart of {company_name} (Price in {symbol})'
+
+    mpf.plot(history, type='line', style='yahoo',
+             title=title, volume=True, savefig=file)
+
+    speak(f"here is the maximum line chart of {company_name}")
+
+    return file
+
+##########################################################################################################################
+
+
 def googleSearch(query):
     search_term = query.split("for")[-1]
     url = f"https://google.com/search?q={search_term}"
@@ -1015,6 +1170,24 @@ def processCommand(query):
 
     elif intent == 'displayThreeMonthCandleSticks':
         return displayThreeMonthCandleSticks(query)
+
+    elif intent == 'displayOneMonthLine':
+        return displayOneMonthLine(query)
+
+    elif intent == 'displayThreeMonthsLine':
+        return displayThreeMonthsLine(query)
+
+    elif intent == 'displaySixMonthsLine':
+        return displaySixMonthsLine(query)
+
+    elif intent == 'displayOneYearLine':
+        return displayOneYearLine(query)
+
+    elif intent == 'displayFiveYearsLine':
+        return displayFiveYearsLine(query)
+
+    elif intent == 'displayMaxLine':
+        return displayMaxLine(query)
 
     elif intent == 'getTotalRevenue':
         return getTotalRevenue(query)
