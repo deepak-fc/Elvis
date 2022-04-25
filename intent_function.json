@@ -8,6 +8,13 @@
             ]
         },
         {
+            "fun": "displayWatchlist",
+            "patterns": [
+                "show me the watchlist",
+                "show me the watch list"
+            ]
+        },
+        {
             "fun": "removeAllStocksFromWatchlist",
             "patterns": [
                 "remove all stocks from watchlist",

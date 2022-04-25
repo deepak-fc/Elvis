@@ -3,6 +3,8 @@ import os
 import webbrowser
 from datetime import *
 
+from matplotlib.pyplot import get
+import termtables as tt
 import mplfinance as mpf
 import pyttsx3
 import speech_recognition as sr
@@ -42,7 +44,8 @@ class MainWidget(Widget):
                 self.ids.img.opacity = 1
 
             else:
-                toDisplay = addNewLine(toDisplay)
+                if 'Asset' not in toDisplay:
+                    toDisplay = addNewLine(toDisplay)
                 self.ids.output_screen.text = toDisplay
 
         except:
@@ -183,7 +186,7 @@ def removeAllStocksFromWatchlist():
         print("Error! cannot create the database connection.")
 
 
-##########################################################################################
+##############################################################################################
 def getWatchlistFromDatabase():
     global conn
     rows = None
@@ -199,9 +202,34 @@ def getWatchlistFromDatabase():
         print("Error! cannot create the database connection.")
 
     return rows
+##############################################################################################
 
+
+def displayWatchlist():
+
+    tickerAndCompanyNames = getWatchlistFromDatabase()
+
+    watchlist = list(map(getCmp, tickerAndCompanyNames))
+    watchlistAsTable = tt.to_string(watchlist, header=[
+        'Asset', 'Current Price'], style=tt.styles.markdown,
+        padding=(0, 1))
+
+    print(watchlistAsTable)
+    return watchlistAsTable
+
+############################################################################################################################################################################################
+
+
+def getCmp(tcElement):
+
+    stock_data = yf.Ticker(tcElement[2])
+    cmp = str(round(stock_data.info['currentPrice'], 2))
+
+    return [tcElement[1], cmp]
 
 ##########################################################################################
+
+
 def addNumberOfSharesToPortfolio(query):
     numberOfShares = [int(i) for i in query.split() if i.isdigit()]
     if len(numberOfShares) == 1:
@@ -372,11 +400,11 @@ def addNewLine(str):
 def getSymbol(str):
     if str == 'rupees':
         return '₹'
-    else:
-        return '$'
 
-
+    return '$'
 ##########################################################################################
+
+
 def getTotalRevenue(query):
     global companyData
 
@@ -1334,6 +1362,9 @@ def processCommand(query):
 
     elif intent == 'removeAllStocksFromWatchlist':
         return removeAllStocksFromWatchlist()
+
+    elif intent == 'displayWatchlist':
+        return displayWatchlist()
 
     elif intent == 'getStockPrice':
         return getStockPrice(query)
