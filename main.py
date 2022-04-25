@@ -294,7 +294,7 @@ def getCompanyNameAndTicker(query):
     global companyData
 
     company_name = ""
-    
+
     if "of" in query:
         start_index = query.split().index('of')
         company_name = " ".join(query.split()[start_index + 1:])
@@ -316,8 +316,10 @@ def getCompanyNameAndTicker(query):
         print(e)
         # results = f"It seems you have said an invalid company name, please say a valid name and try again"
         # speak(results)
-    
+
 ##########################################################################################
+
+
 def companyException(query):
     results = f"It seems you have said an invalid company name, please say a valid name and try again"
     speak(results)
@@ -473,7 +475,7 @@ def get52WeekHigh(query):
 ##########################################################################################
 def getFreeCashFlow(query):
     global companyData
-    
+
     try:
         compNameAndTicker = getCompanyNameAndTicker(query)
         company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
@@ -494,6 +496,8 @@ def getFreeCashFlow(query):
         companyException(query)
 
 ##########################################################################################
+
+
 def getOperatingCashFlow(query):
     global companyData
 
@@ -517,6 +521,8 @@ def getOperatingCashFlow(query):
         companyException(query)
 
 ##########################################################################################
+
+
 def getEps(query):
     global companyData
 
@@ -540,6 +546,8 @@ def getEps(query):
         companyException(query)
 
 ##########################################################################################
+
+
 def getPeRatio(query):
     global companyData
 
@@ -577,6 +585,8 @@ def getPeRatio(query):
         companyException(query)
 
 ##########################################################################################
+
+
 def getEbitda(query):
     global companyData
 
@@ -600,6 +610,8 @@ def getEbitda(query):
         companyException(query)
 
 ##########################################################################################
+
+
 def getPriceToBook(query):
     global companyData
 
@@ -623,6 +635,8 @@ def getPriceToBook(query):
         companyException(query)
 
 ##########################################################################################
+
+
 def getDebtToEquity(query):
     global companyData
 
@@ -646,6 +660,8 @@ def getDebtToEquity(query):
         companyException(query)
 
 ##########################################################################################
+
+
 def getTargetHighPrice(query):
     global companyData
 
@@ -669,6 +685,8 @@ def getTargetHighPrice(query):
         companyException(query)
 
 ##########################################################################################
+
+
 def getForwardEps(query):
     global companyData
 
@@ -676,7 +694,7 @@ def getForwardEps(query):
         compNameAndTicker = getCompanyNameAndTicker(query)
         company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
         stock_data = yf.Ticker(ticker)
-        
+
         try:
             feps = round(stock_data.info['forwardEps'], 2)
 
@@ -691,6 +709,8 @@ def getForwardEps(query):
         companyException(query)
 
 ##########################################################################################
+
+
 def getForwardPe(query):
     global companyData
 
@@ -714,6 +734,8 @@ def getForwardPe(query):
         companyException(query)
 
 ##########################################################################################
+
+
 def getFiftyDma(query):
     global companyData
 
@@ -737,6 +759,8 @@ def getFiftyDma(query):
         companyException(query)
 
 ##########################################################################################
+
+
 def getPegRatio(query):
     global companyData
 
@@ -760,6 +784,8 @@ def getPegRatio(query):
         companyException(query)
 
 ##########################################################################################
+
+
 def getDividendRate(query):
     global companyData
 
@@ -783,6 +809,8 @@ def getDividendRate(query):
         companyException(query)
 
 ##########################################################################################
+
+
 def getLastDividendValue(query):
     global companyData
 
@@ -805,6 +833,8 @@ def getLastDividendValue(query):
         companyException(query)
 
 ##########################################################################################
+
+
 def get52WeekChange(query):
     global companyData
 
@@ -827,6 +857,8 @@ def get52WeekChange(query):
         companyException(query)
 
 ##########################################################################################
+
+
 def getPreviousClose(query):
 
     try:
@@ -849,6 +881,8 @@ def getPreviousClose(query):
         companyException(query)
 
 ##########################################################################################
+
+
 def getRegularMarketOpen(query):
 
     try:
@@ -871,6 +905,8 @@ def getRegularMarketOpen(query):
         companyException(query)
 
 ##########################################################################################
+
+
 def getRegularMarketPrice(query):
 
     try:
@@ -893,6 +929,8 @@ def getRegularMarketPrice(query):
         companyException(query)
 
 ##########################################################################################
+
+
 def getRegularMarketDayLow(query):
 
     try:
@@ -915,6 +953,8 @@ def getRegularMarketDayLow(query):
         companyException(query)
 
 ##########################################################################################
+
+
 def getRegularMarketDayHigh(query):
 
     try:
@@ -937,6 +977,8 @@ def getRegularMarketDayHigh(query):
         companyException(query)
 
 ##########################################################################################
+
+
 def getSector(query):
 
     try:
@@ -957,6 +999,8 @@ def getSector(query):
         companyException(query)
 
 ##########################################################################################
+
+
 def displayFiveDaysCandleSticks(query):
     global companyData
 
@@ -974,12 +1018,12 @@ def displayFiveDaysCandleSticks(query):
             os.remove(file)
 
         mpf.plot(history, type='candle', style='yahoo',
-                volume=True, title=title, savefig=file)
+                 volume=True, title=title, savefig=file)
 
         speak(f"here is the five days candle stick chart of {company_name}")
 
         return file
-    
+
     except:
         dataExceptions(query)
 
@@ -1001,16 +1045,18 @@ def displayFifteenDaysCandleSticks(query):
         if os.path.exists(file):
             os.remove(file)
         mpf.plot(history, type='candle', style='yahoo',
-                volume=True, title=title, savefig=file)
+                 volume=True, title=title, savefig=file)
 
         speak(f"here is the fifteen days candle stick chart of {company_name}")
 
         return file
-    
+
     except:
         dataExceptions(query)
 
 ##########################################################################################################################
+
+
 def displayOneMonthCandleSticks(query):
     global companyData
 
@@ -1028,7 +1074,7 @@ def displayOneMonthCandleSticks(query):
             os.remove(file)
 
         mpf.plot(history, type='candle', style='yahoo',
-                volume=True, title=title, savefig=file)
+                 volume=True, title=title, savefig=file)
 
         speak(f"here is the one month candle stick chart of {company_name}")
 
@@ -1038,6 +1084,8 @@ def displayOneMonthCandleSticks(query):
         dataExceptions(query)
 
 ##########################################################################################################################
+
+
 def displayFortyFiveDaysCandleSticks(query):
     global companyData
 
@@ -1055,8 +1103,9 @@ def displayFortyFiveDaysCandleSticks(query):
             os.remove(file)
 
         mpf.plot(history, type='candle', style='yahoo',
-                title=title,  volume=True, savefig=file)
-        speak(f"here is the forty five days candle stick chart of {company_name}")
+                 title=title,  volume=True, savefig=file)
+        speak(
+            f"here is the forty five days candle stick chart of {company_name}")
 
         return file
 
@@ -1064,6 +1113,8 @@ def displayFortyFiveDaysCandleSticks(query):
         dataExceptions(query)
 
 ##########################################################################################################################
+
+
 def displayThreeMonthCandleSticks(query):
     global companyData
 
@@ -1081,19 +1132,21 @@ def displayThreeMonthCandleSticks(query):
             os.remove(file)
 
         mpf.plot(history, type='candle', style='yahoo',
-                volume=True,  title=title,  savefig=file)
+                 volume=True,  title=title,  savefig=file)
 
         speak(f"here is the three months candle stick chart of {company_name}")
         return file
-    
+
     except:
         dataExceptions(query)
 
 ##########################################################################################################################
+
+
 def displayOneMonthLine(query):
     global companyData
 
-    try: 
+    try:
         compNameAndTicker = getCompanyNameAndTicker(query)
         company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
         # print(ticker)
@@ -1105,12 +1158,12 @@ def displayOneMonthLine(query):
         title = f'1 month line chart of {company_name} (Price in {symbol})'
 
         mpf.plot(history, type='line', style='yahoo',
-                title=title, volume=True, savefig=file)
+                 title=title, volume=True, savefig=file)
 
         speak(f"here is the 1 month line chart of {company_name}")
 
         return file
-    
+
     except:
         dataExceptions(query)
 
@@ -1131,12 +1184,12 @@ def displayThreeMonthsLine(query):
         title = f'3 months line chart of {company_name} (Price in {symbol})'
 
         mpf.plot(history, type='line', style='yahoo',
-                title=title, volume=True, savefig=file)
+                 title=title, volume=True, savefig=file)
 
         speak(f"here is the 3 months line chart of {company_name}")
 
         return file
-    
+
     except:
         dataExceptions(query)
 
@@ -1158,12 +1211,12 @@ def displaySixMonthsLine(query):
         title = f'6 months line chart of {company_name} (Price in {symbol})'
 
         mpf.plot(history, type='line', style='yahoo',
-                title=title, volume=True, savefig=file)
+                 title=title, volume=True, savefig=file)
 
         speak(f"here is the 6 months line chart of {company_name}")
 
         return file
-    
+
     except:
         dataExceptions(query)
 
@@ -1185,12 +1238,12 @@ def displayOneYearLine(query):
         title = f'1 year line chart of {company_name} (Price in {symbol})'
 
         mpf.plot(history, type='line', style='yahoo',
-                title=title, volume=True, savefig=file)
+                 title=title, volume=True, savefig=file)
 
         speak(f"here is the 1 year line chart of {company_name}")
 
         return file
-    
+
     except:
         dataExceptions(query)
 
@@ -1214,7 +1267,7 @@ def displayFiveYearsLine(query):
         speak(f"here is the 5 years line chart of {company_name}")
 
         mpf.plot(history, type='line', style='yahoo',
-                title=title, volume=True, savefig=file)
+                 title=title, volume=True, savefig=file)
 
         return file
 
@@ -1239,7 +1292,7 @@ def displayMaxLine(query):
         title = f'Maximum time frame line chart of {company_name} (Price in {symbol})'
 
         mpf.plot(history, type='line', style='yahoo',
-                title=title, volume=True, savefig=file)
+                 title=title, volume=True, savefig=file)
 
         speak(f"here is the maximum line chart of {company_name}")
 

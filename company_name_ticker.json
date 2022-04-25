@@ -96,6 +96,5 @@
     "Newyork Stock Exchange":{"company_ticker":"^NYA","currency":"dollars"},
     "Nifty 50":{"company_ticker":"^NSEI","currency":"rupees"},
     "Bank Nifty":{"company_ticker":"^NSEBANK","currency":"rupees"},
-    "Sensex":{"company_ticker":"^BSESN","currency":"rupees"},
-    
+    "Sensex":{"company_ticker":"^BSESN","currency":"rupees"}
 }
