@@ -4,7 +4,6 @@ import webbrowser
 from datetime import *
 
 from matplotlib.pyplot import get
-import termtables as tt
 import mplfinance as mpf
 import pyttsx3
 import speech_recognition as sr
@@ -14,6 +13,9 @@ from kivy.core.window import Window
 from kivy.lang import Builder
 from kivy.uix.widget import Widget
 from num2words import num2words as n2w
+import pandas as pd
+from html2image import Html2Image
+from pretty_html_table import build_table
 
 import sqlite3
 from sqlite3 import Error
@@ -38,10 +40,15 @@ class MainWidget(Widget):
         toDisplay = processCommand(userVoiceCommand)
 
         try:
+
             if toDisplay.endswith('.png'):
                 self.ids.output_screen.text = ''
                 self.ids.img.source = toDisplay
                 self.ids.img.opacity = 1
+                self.ids.img.pos_hint = {"x": 0, "top": 0.89}
+
+                if toDisplay == 'watchlist.png':
+                    self.ids.img.pos_hint = {"x": 0.3, "top": 0.89}
 
             else:
                 if 'Asset' not in toDisplay:
@@ -209,13 +216,15 @@ def displayWatchlist():
 
     tickerAndCompanyNames = getWatchlistFromDatabase()
 
-    watchlist = list(map(getCmp, tickerAndCompanyNames))
-    watchlistAsTable = tt.to_string(watchlist, header=[
-        'Asset', 'Current Price'], style=tt.styles.markdown,
-        padding=(0, 1))
+    # print(tickerAndCompanyNames)
+    # [(1, 'Sbi', 'SBIN.NS'), (2, 'Twitter', 'TWTR'),
+    # (3, 'Tesla', 'TSLA'), (4, 'Reliance', 'RELIANCE.NS')]
 
-    print(watchlistAsTable)
-    return watchlistAsTable
+    watchlist = list(map(getCmp, tickerAndCompanyNames))
+
+    x = pd.DataFrame(watchlist, columns=['Asset', 'Current Price'])
+    return convertDataFrameToImage(x)
+
 
 ############################################################################################################################################################################################
 
@@ -226,6 +235,23 @@ def getCmp(tcElement):
     cmp = str(round(stock_data.info['currentPrice'], 2))
 
     return [tcElement[1], cmp]
+
+###########################################################################################################################
+
+
+def convertDataFrameToImage(df):
+
+    html_table_blue_light = build_table(
+        df, 'grey_dark', font_size="80px", text_align="center", width="220px", padding="30px")
+
+    with open('styled_table.html', 'w') as f:
+        f.write(html_table_blue_light)
+
+    hti = Html2Image()
+    with open('styled_table.html') as f:
+        hti.screenshot(f.read(), save_as='watchlist.png')
+
+    return 'watchlist.png'
 
 ##########################################################################################
 

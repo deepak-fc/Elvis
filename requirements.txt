@@ -8,3 +8,6 @@ num2words
 pipwin
 kivy
 mplfinance
+pretty_html_table
+html2image
+pandas
