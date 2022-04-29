@@ -370,14 +370,24 @@ def getCompanyNameAndTicker(query):
         print(e)
         # results = f"It seems you have said an invalid company name, please say a valid name and try again"
         # speak(results)
+##########################################################################################
+
+def stockException(query):
+    vocal_results = f"This data is not available for indices or bitcoins"
+    speak(vocal_results)
+
+    results = f"This data is not available for indices or bitcoins"
+    return results
 
 ##########################################################################################
 
 
 def companyException(query):
-    results = f"It seems you have said an invalid company name, please say a valid name and try again"
-    speak(results)
+    vocal_results = f"It seems you have said an invalid company name, please say a valid name and try again"
+    speak(vocal_results)
 
+    results = f"It seems you have said an invalid company name, please say a valid name and try again"
+    return results
 
 ##########################################################################################
 def dataExceptions(query):
@@ -407,7 +417,7 @@ def getStockPrice(query):
             return results
 
         except:
-            dataExceptions(query)
+            stockException(query)
     except:
         companyException(query)
 
@@ -448,7 +458,7 @@ def getTotalRevenue(query):
             return results
 
         except:
-            dataExceptions(query)
+            stockException(query)
     except:
         companyException(query)
 
@@ -497,7 +507,7 @@ def get52WeekLow(query):
             return results
 
         except:
-            dataExceptions(query)
+            stockException(query)
     except:
         companyException(query)
 
@@ -521,7 +531,7 @@ def get52WeekHigh(query):
             return results
 
         except:
-            dataExceptions(query)
+            stockException(query)
     except:
         companyException(query)
 
@@ -545,7 +555,7 @@ def getFreeCashFlow(query):
             return results
 
         except:
-            dataExceptions(query)
+            stockException(query)
     except:
         companyException(query)
 
@@ -570,7 +580,7 @@ def getOperatingCashFlow(query):
             return results
 
         except:
-            dataExceptions(query)
+            stockException(query)
     except:
         companyException(query)
 
@@ -595,7 +605,7 @@ def getEps(query):
             return results
 
         except:
-            dataExceptions(query)
+            stockException(query)
     except:
         companyException(query)
 
@@ -634,7 +644,7 @@ def getPeRatio(query):
             return results
 
         except:
-            dataExceptions(query)
+            stockException(query)
     except:
         companyException(query)
 
@@ -659,7 +669,7 @@ def getEbitda(query):
             return results
 
         except:
-            dataExceptions(query)
+            stockException(query)
     except:
         companyException(query)
 
@@ -684,7 +694,7 @@ def getPriceToBook(query):
             return results
 
         except:
-            dataExceptions(query)
+            stockException(query)
     except:
         companyException(query)
 
@@ -709,7 +719,7 @@ def getDebtToEquity(query):
             return results
 
         except:
-            dataExceptions(query)
+            stockException(query)
     except:
         companyException(query)
 
@@ -734,7 +744,7 @@ def getTargetHighPrice(query):
             return results
 
         except:
-            dataExceptions(query)
+            stockException(query)
     except:
         companyException(query)
 
@@ -758,7 +768,7 @@ def getForwardEps(query):
             results = f"The forward earnings per share of {company_name} is {getSymbol(companyData[company_name]['currency'])}{feps}"
             return results
         except:
-            dataExceptions(query)
+            stockException(query)
     except:
         companyException(query)
 
@@ -833,7 +843,7 @@ def getPegRatio(query):
             return results
 
         except:
-            dataExceptions(query)
+            stockException(query)
     except:
         companyException(query)
 
@@ -858,7 +868,7 @@ def getDividendRate(query):
             return results
 
         except:
-            dataExceptions(query)
+            stockException(query)
     except:
         companyException(query)
 
@@ -882,7 +892,7 @@ def getLastDividendValue(query):
             return results
 
         except:
-            dataExceptions(query)
+            stockException(query)
     except:
         companyException(query)
 
@@ -906,7 +916,7 @@ def get52WeekChange(query):
             return results
 
         except:
-            dataExceptions(query)
+            stockException(query)
     except:
         companyException(query)
 
@@ -1048,7 +1058,7 @@ def getSector(query):
             return vocal_results
 
         except:
-            dataExceptions(query)
+            stockException(query)
     except:
         companyException(query)
 
