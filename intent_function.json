@@ -43,6 +43,14 @@
             ]
         },
         {
+            "fun": "displayRenkoChart",
+            "patterns": [
+                "renko chart of",
+                "renko graph of",
+                "renko of"
+            ]
+        },
+        {
             "fun": "displayFortyFiveDaysCandleSticks",
             "patterns": [
                 "fourty five days candlesticks chart of",
