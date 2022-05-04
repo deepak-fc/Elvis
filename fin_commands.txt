@@ -32,3 +32,4 @@
 32) add (stock name) to watchlist
 33) remove (stock name) from watchlist
 34) remove all stocks from watchlist
+35) renko chart of
