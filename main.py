@@ -1366,7 +1366,50 @@ def displayMaxLine(query):
         dataExceptions(query)
 
 ##########################################################################################################################
+def displayRenkoChart(query):
+    global companyData
 
+    try:
+        compNameAndTicker = getCompanyNameAndTicker(query)
+        company_name, ticker = compNameAndTicker[0], compNameAndTicker[1]
+
+        start_date = datetime.today() - timedelta(1825)  # getting data of around 5 years.
+        end_date = datetime.today()
+        ohlcv = yf.download(ticker, start_date, end_date)
+
+        bricks = round(ATR(ohlcv, 50)["ATR"][-1], 0)  # capturing the latest ATR
+        # rounding off the result to an integer.
+
+        file = 'images/' + company_name.lower() + '-renko.png'
+        
+        if os.path.exists(file):
+            os.remove(file)
+
+        mpf.plot(ohlcv, type='renko', renko_params=dict(brick_size=bricks, atr_length=14),
+                 style='yahoo', figsize=(18, 7), savefig=file,
+                 title=f"RENKO CHART WITH ATR {company_name} - {ticker}")
+
+        speak(f"Here is the renko chart of {company_name}")
+        return file
+
+    except:
+        dataExceptions(query)
+
+
+##########################################################################################################################
+def ATR(DF, n):
+    df = DF.copy()  # making copy of the original dataframe
+
+    df['H-L'] = abs(df['High'] - df['Low'])
+    df['H-PC'] = abs(df['High'] - df['Adj Close'].shift(1))  # high -previous close
+    df['L-PC'] = abs(df['Low'] - df['Adj Close'].shift(1))  # low - previous close
+    df['TR'] = df[['H-L', 'H-PC', 'L-PC']].max(axis=1, skipna=False)  # True range
+    df['ATR'] = df['TR'].rolling(n).mean()  # average –true range
+    df = df.drop(['H-L', 'H-PC', 'L-PC'], axis=1)  # dropping the unneccesary columns
+    df.dropna(inplace=True)  # droping null items
+
+    return df
+##########################################################################################################################
 
 def googleSearch(query):
     search_term = query.split("for")[-1]
@@ -1509,6 +1552,9 @@ def processCommand(query):
 
     elif intent == 'getRegularMarketDayHigh':
         return getRegularMarketDayHigh(query)
+
+    elif intent == 'displayRenkoChart':
+        return displayRenkoChart(query)
 
     elif intent == 'getSector':
         return getSector(query)
