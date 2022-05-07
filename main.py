@@ -66,7 +66,7 @@ class MainWidget(Widget):
 ##########################################################################################
 class ElvisApplication(App):
     def build(self):
-        Window.clearcolor = (1, 1, 1, 1)
+        Window.clearcolor = (0, 0, 0, 0)
         return MainWidget()
 
 
