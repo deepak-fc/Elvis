@@ -90,8 +90,15 @@ def programInit():
     connectToDatabase()
     createInitialTables()
 
+##########################################################################################
+
+
+def addCommasToNumbers(number):
+    return "{:,}".format(number)
 
 ##########################################################################################
+
+
 def connectToDatabase():
     global conn
     try:
@@ -416,7 +423,7 @@ def getStockPrice(query):
             vocal_results = f"The last trading price of {company_name}, is {n2w(price)}{companyData[company_name]['currency']}"
             speak(vocal_results)
 
-            results = f"The last trading price of {company_name}, is {getSymbol(companyData[company_name]['currency'])}{price}"
+            results = f"The last trading price of {company_name}, is {getSymbol(companyData[company_name]['currency'])}{addCommasToNumbers(price)}"
             return results
 
         except:
@@ -457,7 +464,7 @@ def getTotalRevenue(query):
             vocal_results = f"The total revenue of {company_name} is  {n2w(revenue)} dollars"
             speak(vocal_results)
 
-            results = f"The total revenue of {company_name} is  ${revenue}"
+            results = f"The total revenue of {company_name} is  ${addCommasToNumbers(revenue)}"
             return results
 
         except:
@@ -481,7 +488,7 @@ def getMarketCap(query):
             vocal_results = f"The market capitalisation of {company_name} is {n2w(marketcap)} {companyData[company_name]['currency']}"
             speak(vocal_results)
 
-            results = f"The market capitalisation of {company_name} is {getSymbol({companyData[company_name]['currency']})}{(marketcap)}"
+            results = f"The market capitalisation of {company_name} is {getSymbol({companyData[company_name]['currency']})}{addCommasToNumbers(marketcap)}"
             return results
 
         except:
@@ -506,7 +513,7 @@ def get52WeekLow(query):
             vocal_results = f"The fifty two week low of {company_name} is {n2w(ftwl)} {getSymbol(companyData[company_name]['currency'])}"
             speak(vocal_results)
 
-            results = f"The fifty two week low of {company_name} is {getSymbol(companyData[company_name]['currency'])}{ftwl}"
+            results = f"The fifty two week low of {company_name} is {getSymbol(companyData[company_name]['currency'])}{addCommasToNumbers(ftwl)}"
             return results
 
         except:
@@ -530,7 +537,7 @@ def get52WeekHigh(query):
             vocal_results = f"The fifty two week high of {company_name} is  {n2w(ftwh)} {getSymbol(companyData[company_name]['currency'])}"
             speak(vocal_results)
 
-            results = f"The fifty two week high of {company_name} is {getSymbol(companyData[company_name]['currency'])}{ftwh}"
+            results = f"The fifty two week high of {company_name} is {getSymbol(companyData[company_name]['currency'])}{addCommasToNumbers(ftwh)}"
             return results
 
         except:
@@ -554,7 +561,7 @@ def getFreeCashFlow(query):
             speak_results = f"The free cash flow of {company_name} is {n2w(fcf)} {companyData[company_name]['currency']}"
             speak(speak_results)
 
-            results = f"The free cash flow of {company_name} is {getSymbol(companyData[company_name]['currency'])}{fcf}"
+            results = f"The free cash flow of {company_name} is {getSymbol(companyData[company_name]['currency'])}{addCommasToNumbers(fcf)}"
             return results
 
         except:
@@ -579,7 +586,7 @@ def getOperatingCashFlow(query):
             vocal_results = f"The operating cash flow of {company_name} is {n2w(ocf)} {companyData[company_name]['currency']}"
             speak(vocal_results)
 
-            results = f"The operating cash flow of {company_name} is {getSymbol({companyData[company_name]['currency']})}{ocf}"
+            results = f"The operating cash flow of {company_name} is {getSymbol({companyData[company_name]['currency']})}{addCommasToNumbers(ocf)}"
             return results
 
         except:
@@ -604,7 +611,7 @@ def getEps(query):
             vocal_results = f"The earnings per share of {company_name} is {n2w(eps)}{companyData[company_name]['currency']}"
             speak(vocal_results)
 
-            results = f"The earnings per share of {company_name} is {getSymbol(companyData[company_name]['currency'])}{eps}"
+            results = f"The earnings per share of {company_name} is {getSymbol(companyData[company_name]['currency'])}{addCommasToNumbers(eps)}"
             return results
 
         except:
@@ -668,7 +675,7 @@ def getEbitda(query):
             vocal_results = f"The EBITDA of {company_name} is {n2w(ebitda)} {companyData[company_name]['currency']}"
             speak(vocal_results)
 
-            results = f"The EBITDA of {company_name} is {getSymbol(companyData[company_name]['currency'])}{ebitda}"
+            results = f"The EBITDA of {company_name} is {getSymbol(companyData[company_name]['currency'])}{addCommasToNumbers(ebitda)}"
             return results
 
         except:
@@ -743,7 +750,7 @@ def getTargetHighPrice(query):
             vocal_results = f"The target high price of {company_name} is {n2w(tp)} {companyData[company_name]['currency']}"
             speak(vocal_results)
 
-            results = f"The target high price of {company_name} is {getSymbol(companyData[company_name]['currency'])}{tp}"
+            results = f"The target high price of {company_name} is {getSymbol(companyData[company_name]['currency'])}{addCommasToNumbers(tp)}"
             return results
 
         except:
@@ -768,7 +775,7 @@ def getForwardEps(query):
             vocal_results = f"The forward earnings per share of {company_name} is {n2w(feps)}, {companyData[company_name]['currency']}"
             speak(vocal_results)
 
-            results = f"The forward earnings per share of {company_name} is {getSymbol(companyData[company_name]['currency'])}{feps}"
+            results = f"The forward earnings per share of {company_name} is {getSymbol(companyData[company_name]['currency'])}{addCommasToNumbers(feps)}"
             return results
         except:
             stockException(query)
@@ -817,7 +824,7 @@ def getFiftyDma(query):
             vocal_results = f"The fifty day moving average of {company_name} is {n2w(fiftyDma)} {companyData[company_name]['currency']}"
             speak(vocal_results)
 
-            results = f"The fifty day moving average of {company_name} is {getSymbol(companyData[company_name]['currency'])}{fiftyDma}"
+            results = f"The fifty day moving average of {company_name} is {getSymbol(companyData[company_name]['currency'])}{addCommasToNumbers(fiftyDma)}"
             return results
 
         except:
@@ -891,7 +898,7 @@ def getLastDividendValue(query):
             vocal_results = f"The last dividend value of {company_name} is {n2w(ldiv)} {companyData[company_name]['currency']}"
             speak(vocal_results)
 
-            results = f"The last dividend value of {company_name} is {getSymbol(companyData[company_name]['currency'])}{ldiv}"
+            results = f"The last dividend value of {company_name} is {getSymbol(companyData[company_name]['currency'])}{addCommasToNumbers(ldiv)}"
             return results
 
         except:
@@ -939,7 +946,7 @@ def getPreviousClose(query):
             vocal_results = f"The previous close of {company_name} is {n2w(prevclose)} {companyData[company_name]['currency']}"
             speak(vocal_results)
 
-            results = f"The previous close of {company_name} is {getSymbol(companyData[company_name]['currency'])}{prevclose}"
+            results = f"The previous close of {company_name} is {getSymbol(companyData[company_name]['currency'])}{addCommasToNumbers(prevclose)}"
             return results
 
         except:
@@ -963,7 +970,7 @@ def getRegularMarketOpen(query):
             vocal_results = f"The opening price of {company_name}, is {n2w(openprice)} {companyData[company_name]['currency']}"
             speak(vocal_results)
 
-            results = f"The opening price of {company_name}, is {getSymbol(companyData[company_name]['currency'])}{openprice}"
+            results = f"The opening price of {company_name}, is {getSymbol(companyData[company_name]['currency'])}{addCommasToNumbers(openprice)}"
             return results
 
         except:
@@ -987,7 +994,7 @@ def getRegularMarketPrice(query):
             vocal_results = f"The market price of {company_name}, is {n2w(marketprice)} {companyData[company_name]['currency']}"
             speak(vocal_results)
 
-            results = f"The market price of {company_name}, is {getSymbol(companyData[company_name]['currency'])}{marketprice}"
+            results = f"The market price of {company_name}, is {getSymbol(companyData[company_name]['currency'])}{addCommasToNumbers(marketprice)}"
             return results
 
         except:
@@ -1035,7 +1042,7 @@ def getRegularMarketDayHigh(query):
             vocal_results = f"The day high price of {company_name} is {n2w(dayhigh)} {companyData[company_name]['currency']}"
             speak(vocal_results)
 
-            results = f"The day high price of {company_name} is {getSymbol(companyData[company_name]['currency'])}{dayhigh}"
+            results = f"The day high price of {company_name} is {getSymbol(companyData[company_name]['currency'])}{addCommasToNumbers(dayhigh)}"
             return results
 
         except:
