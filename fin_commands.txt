@@ -29,7 +29,14 @@
 29) three months candlesticks chart of
 30) forty five days candlestick chart of
 31) fifteen days candlesticks chart of
-32) add (stock name) to watchlist
-33) remove (stock name) from watchlist
-34) remove all stocks from watchlist
-35) renko chart of
+32) three months candle sticks
+33) one month line
+34) three months line
+35) six months line
+36) one year line
+37) 5 years line
+38) max line
+39) add (stock name) to watchlist
+40) remove (stock name) from watchlist
+41) remove all stocks from watchlist
+42) renko chart of
